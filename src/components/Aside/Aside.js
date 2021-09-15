@@ -47,7 +47,7 @@ const Aside = () => {
                     title="Logout"
                     className={classes['logout-link']}
                     activeClassName={classes.active}
-                    to='/profile'>
+                    to='/logout'>
                     <LogoutIcon/>
                 </NavLink>
             </nav>
