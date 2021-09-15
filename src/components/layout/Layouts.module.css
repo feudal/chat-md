@@ -1,0 +1,9 @@
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+.main {
+    flex-grow: 1;
+    background-color: #191A21;
+    color: #fff;
+}

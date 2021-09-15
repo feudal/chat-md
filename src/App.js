@@ -1,6 +1,6 @@
 import React from "react";
 import {Route, Switch} from "react-router-dom";
-import './App.css';
+
 import Entrance from "./pages/Entrance";
 import Profile from "./pages/Profile";
 import Calendar from "./pages/Calendar";
@@ -8,6 +8,7 @@ import EditProfile from "./pages/EditProfile";
 import Chat from "./pages/Chat";
 import Settings from "./pages/Settings";
 import Layout from "./components/layout/Layout";
+import NotFound from "./pages/NotFound";
 
 function App() {
     return (
@@ -32,7 +33,7 @@ function App() {
                     <Settings/>
                 </Route>
                 <Route path='*'>
-                    404
+                    <NotFound/>
                 </Route>
             </Switch>
         </Layout>
