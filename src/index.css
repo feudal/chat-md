@@ -1,9 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Sahitya:wght@400;700&family=Sarabun:wght@400;700&family=Sirin+Stencil&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+li {
+  list-style: none;
+}
+
 a {
   text-decoration: none;
+}
+
+main {
+  /*font-family: 'Sahitya', serif;*/
+  /*font-family: 'Sirin Stencil', cursive;*/
+  font-family: 'Sarabun', sans-serif;
 }

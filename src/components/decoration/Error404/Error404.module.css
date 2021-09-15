@@ -1,0 +1,23 @@
+.error {
+    position: absolute;
+    top: 0;
+    z-index: 5;
+    font-family: 'Sirin Stencil', cursive;
+    text-align: center;
+    width: 100%;
+}
+
+.title {
+    font-family: 'Sirin Stencil', cursive;
+    font-size: 10vh;
+    line-height: 10vh;
+    margin-top: 15vh;
+}
+
+.error span {
+    display: inline-block;
+    font-size: 50vh;
+    line-height: 40vh;
+    margin-top: 10vh;
+    width: 100%;
+}
