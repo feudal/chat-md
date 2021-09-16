@@ -1,13 +1,28 @@
 .block {
     border-top: 1px solid #888A8F;
-    padding: 10px;
+    padding: 10px 0 10px 10px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.title {
+.link {
     font-family: Sahitya, serif;
     font-size: 18px;
     font-style: normal;
     font-weight: 400;
     line-height: 28px;
     text-align: left;
+
+    color: #fff;
+}
+.link:hover {
+    text-decoration: underline;
+}
+.danger {
+    color: #EF5E5E;
+}
+.link--non-active {
+    pointer-events: none;
 }

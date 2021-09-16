@@ -1,0 +1,23 @@
+.frame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+}
+.img {
+    width: 120px;
+    height: 120px;
+    border: 1px solid #888A8F;
+    border-radius: 50%;
+}
+.name {
+    font-family: Sahitya, serif;
+    font-size: 24px;
+    line-height: 38px;
+    font-style: normal;
+    font-weight: 700;
+    text-align: left;
+
+    color: #E5E5E8;
+    margin-top: 20px;
+}
