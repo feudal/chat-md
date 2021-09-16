@@ -30,7 +30,7 @@ function App() {
                 <Route exact path='/profile'>
                     <Profile/>
                 </Route>
-                <Route path='/profile/edit'>
+                <Route path='/edit-profile'>
                     <EditProfile/>
                 </Route>
                 <Route path='/settings'>

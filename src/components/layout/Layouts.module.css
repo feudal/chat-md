@@ -1,6 +1,7 @@
 .wrapper {
-    display: flex;
+    display: grid;
     width: 100%;
+    grid-template-columns: 80px 1fr;
 }
 .main {
     flex-grow: 1;
