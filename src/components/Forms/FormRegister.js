@@ -17,7 +17,7 @@ const FormRegister = (props) => {
             </label>
             <span className={classes.error}>Parola prea scurta!</span>
             <label className={classes.label}>
-                Confirma parola
+                Confirmă parola
                 <input className={classes.input} type="password"/>
             </label>
             <span className={classes.error}>Parola nu coencide!</span>

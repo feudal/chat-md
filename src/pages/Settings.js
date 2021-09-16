@@ -1,9 +1,19 @@
 import React from 'react';
+import ChangeSettings from "../components/Settings/ChangeSettings/ChangeSettings";
 
 const Settings = () => {
     return (
         <div>
-            Settings
+            <ChangeSettings
+                title='Interfața utilizatorului'
+                span='Dark mode'
+                toggle={true}
+            />
+            <ChangeSettings
+                title='Date personale'
+                span='Schimare parolă'
+                toggle={false}
+            />
         </div>
     );
 };
