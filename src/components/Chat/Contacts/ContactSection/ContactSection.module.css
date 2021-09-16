@@ -1,0 +1,16 @@
+.section {
+    margin-top: 20px;
+}
+
+.title {
+    text-transform: uppercase;
+    font-family: Sahitya, serif;
+    font-size: 18px;
+    line-height: 22px;
+    font-style: normal;
+    font-weight: 400;
+    text-align: left;
+
+    color: #888A8F;
+    margin-left: 20px;
+}

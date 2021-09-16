@@ -1,10 +1,16 @@
 import React from 'react';
+import Contacts from "../components/Chat/Contacts/Contacts";
+import Messages from "../components/Chat/Messages/Messages";
+import ContactInfo from "../components/Chat/ContactInfo/ContactInfo";
+import ChatLayout from "../components/layout/ChatLayout";
 
 const Chat = () => {
     return (
-        <div>
-          Chat
-        </div>
+        <ChatLayout>
+          <Contacts/>
+          <Messages/>
+          <ContactInfo/>
+        </ChatLayout>
     );
 };
 

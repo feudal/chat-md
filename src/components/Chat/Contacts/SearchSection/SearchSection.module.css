@@ -1,0 +1,37 @@
+.form {
+    margin-top: 30px;
+}
+
+.title {
+    text-transform: uppercase;
+    font-family: Sahitya, serif;
+    font-size: 18px;
+    line-height: 22px;
+    font-style: normal;
+    font-weight: 400;
+    text-align: left;
+
+    color: #888A8F;
+    margin-left: 20px;
+}
+.input {
+    border-radius: 3px;
+    width: calc(100% - 40px);
+    margin: 20px 20px 0;
+    padding: 6px 15px 6px 30px;
+
+    color: #fff;
+    font-family: Sahitya, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 26px;
+    outline: none;
+    border: 1px solid transparent;
+
+    background: rgba(0, 0, 0, 0.25) url('../../../../assets/icons/search.svg') no-repeat 5px center;
+}
+
+.input:focus {
+    border: 1px solid #ffffff50;
+}

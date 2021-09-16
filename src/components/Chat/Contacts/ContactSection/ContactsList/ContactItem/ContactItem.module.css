@@ -1,0 +1,47 @@
+.item {
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    padding: 5px 0 5px 20px;
+
+    transition: all .3s;
+}
+
+.link:hover {
+    background: #3F3F5D;
+}
+
+.link:hover .name {
+    color: #fff;
+}
+
+.link.active {
+    background: #3F3F5D;
+}
+
+.link.active .name {
+    color: #fff;
+}
+
+.logo {
+    width: 45px;
+    height: 45px;
+
+    border: 1px solid #2D2E38;
+    border-radius: 50%;
+}
+
+.name {
+    font-family: Sahitya, serif;
+    font-size: 16px;
+    line-height: 20px;
+    font-style: normal;
+    font-weight: 400;
+    text-align: left;
+
+    color: #888A8F;
+    margin: 0;
+}
+
