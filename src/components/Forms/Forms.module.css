@@ -1,0 +1,121 @@
+.form {
+    width: 50vw;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.13);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+    padding: 50px 35px;
+
+    margin: 0 auto;
+}
+
+.title {
+    color: #000;
+    text-align: center;
+    font-size: 28px;
+    line-height: 32px;
+    margin-bottom: 5px;
+}
+
+.label {
+    color: #000;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.input {
+    color: #000;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 1px solid transparent;
+
+    width: 100%;
+    padding: 6px 10px;
+    margin: 5px 0 12px;
+    border-radius: 3px;
+
+    outline: none;
+    transition: all .3s;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: normal;
+}
+
+.input::placeholder {
+    color: rgba(0, 0, 0, .75);
+    color: #fff;
+    color: rgba(255, 255, 255, .4);
+}
+
+.input:focus {
+    box-shadow: 0 0 5px 1px #191A21;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px rgba(200, 200, 200, 0.45) inset !important;
+}
+
+.input--error {
+    border: 1px solid #ff4f00;
+    box-shadow: 0 0 3px 3px #ff4f0050, 0 0 0 30px #ff4f0033 inset;
+}
+
+.button {
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 16px;
+    line-height: 20px;
+    width: 100%;
+    text-align: center;
+    border-radius: 5px;
+    padding: 8px;
+    background: #191A21;
+    color: #fff;
+    margin-top: 15px;
+
+    transition: all .3s;
+}
+
+.button:hover {
+    background: #000;
+}
+
+.form-group {
+    margin-top: 20px;
+}
+
+.span {
+    color: #000;
+    font-weight: bold;
+    font-size: 18px;
+    margin-right: 20px;
+}
+
+.link {
+    color: #000;
+    font-size: 18px;
+    text-decoration: underline;
+}
+
+.link:hover {
+    text-decoration: none;
+}
+
+.error {
+    /*display: block;*/
+    display: none;
+    font-weight: bold;
+    color: #6d0000;
+    position: relative;
+    top: -5px;
+}
+

@@ -4,6 +4,18 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+  font-family: 'Sarabun', sans-serif;
+  /*font-family: 'Sahitya', serif;*/
+  /*font-family: 'Sirin Stencil', cursive;*/
+}
+
+button {
+  border: 0;
+}
+
+input {
+  border: 0;
 }
 
 li {
@@ -12,10 +24,4 @@ li {
 
 a {
   text-decoration: none;
-}
-
-main {
-  /*font-family: 'Sahitya', serif;*/
-  /*font-family: 'Sirin Stencil', cursive;*/
-  font-family: 'Sarabun', sans-serif;
 }
