@@ -9,6 +9,7 @@ import Chat from "./pages/Chat";
 import Settings from "./pages/Settings";
 import Layout from "./components/layout/Layout";
 import NotFound from "./pages/NotFound";
+import ChangePassword from "./pages/ChangePassword";
 
 function App() {
     return (
@@ -16,6 +17,9 @@ function App() {
             <Switch>
                 <Route exact path='/' >
                     <Entrance/>
+                </Route>
+                <Route exact path='/change-password' >
+                    <ChangePassword/>
                 </Route>
                 <Route path='/chat'>
                     <Chat/>

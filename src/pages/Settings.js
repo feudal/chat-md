@@ -11,7 +11,7 @@ const Settings = () => {
             />
             <ChangeSettings
                 title='Date personale'
-                span='Schimare parolă'
+                link='Schimare parolă'
                 toggle={false}
             />
         </div>
