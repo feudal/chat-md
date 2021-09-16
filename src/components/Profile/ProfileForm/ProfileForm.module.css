@@ -1,0 +1,97 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+span {
+    display: block;
+    font-family: Sarabun, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    padding-left: 10px;
+    margin-top: 5px;
+
+    color: #FFFFFF;
+}
+.input {
+    width: 100%;
+    background: transparent;
+    border-bottom: 1px solid #2D2E38;
+    padding: 3px 10px;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: Sarabun, serif;
+    font-size: 16px;
+    line-height: 20px;
+    font-style: normal;
+    font-weight: 400;
+    text-align: left;
+    outline: 0;
+}
+.input--lock {
+    background: url("../../../assets/icons/lock.svg") no-repeat calc(100% - 10px) 50%;
+}
+.input--lock:focus {
+    border-bottom: 1px solid #2D2E38!important;
+}
+.input:focus {
+    border-bottom: 1px solid #fff;
+}
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+.input::placeholder {
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #191a21 inset !important;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.5);
+}
+.label {
+    display: block;
+    width: 100%;
+}
+.button {
+    margin-top: auto;
+    padding: 0 20px;
+    cursor: pointer;
+    background: #3337CC;
+    height: 40px;
+    border-radius: 5px;
+    font-family: Sarabun, serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 21px;
+    color: #FFFFFF;
+    transition: all .3s;
+}
+.button:hover {
+    background: #252893;
+}
+
+.textarea {
+    resize: vertical;
+    width: 100%;
+    min-height: 20vh;
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    outline: none;
+
+    font-family: Sarabun, serif;
+    font-size: 16px;
+    line-height: 20px;
+    font-style: normal;
+    font-weight: 400;
+    text-align: left;
+    color: rgba(255, 255, 255, 0.5);
+}
+.textarea:focus {
+    border: 1px solid #fff;
+}
+.error {}

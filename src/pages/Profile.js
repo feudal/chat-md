@@ -8,7 +8,6 @@ const PROFILE_DATA = {
     name: 'Andreea Marin',
     email: 'andreea@gmail.com',
     mobile: '060 123654',
-    gender: 'femenin',
     dob: '12/12/2000',
     text: 'Sunt perfecţionistă ,nu îmi place să fac lucrurile de mântuiala şi ţin la detalii.Am o memorie extraordinară' +
         ' şi ţin minte şi cele mai neinteresante lucruri,deci dacă avem vreun conflict fii sigur că o să ţin minte şi ' +

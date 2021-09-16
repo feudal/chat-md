@@ -23,10 +23,6 @@ const ProfileInfo = (props) => {
                 <span className={classes.text}>{profile.mobile}</span>
             </div>
             <div className={classes.group}>
-                <h3 className={classes.title}>Gen</h3>
-                <span className={classes.text}>{profile.gender}</span>
-            </div>
-            <div className={classes.group}>
                 <h3 className={classes.title}>Data de nastere</h3>
                 <span className={classes.text}>{profile.dob}</span>
             </div>
