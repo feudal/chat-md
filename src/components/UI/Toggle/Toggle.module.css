@@ -1,0 +1,31 @@
+.toggle {
+    cursor: pointer;
+    position: relative;
+    width: 35px;
+    height: 12px;
+    background: #EEE;
+    border-radius: 50px;
+    transition: all .3s;
+}
+
+.toggle:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -4.5px;
+    width: 20px;
+    height: 20px;
+
+    border-radius: 50%;
+    background: #C4C4C4;
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.5);
+}
+
+.toggle.active {
+    background: rgba(66, 170, 149, 0.5);
+}
+
+.toggle.active:after {
+    background: #42AA95;
+    transform: translate(15px, 0);
+}

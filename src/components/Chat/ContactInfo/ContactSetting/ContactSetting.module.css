@@ -1,0 +1,13 @@
+.block {
+    border-top: 1px solid #888A8F;
+    padding: 10px;
+}
+
+.title {
+    font-family: Sahitya, serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+    text-align: left;
+}
