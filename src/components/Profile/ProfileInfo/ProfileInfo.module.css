@@ -1,3 +1,8 @@
+.container {
+    position: relative;
+    padding-top: 10px;
+}
+
 .main-title {
     font-family: Sarabun, serif;
     font-style: normal;
@@ -9,6 +14,7 @@
     margin-bottom: 5px;
 
 }
+
 .title {
     font-family: Sarabun, serif;
     font-style: normal;
@@ -36,5 +42,21 @@
 }
 
 p {
-    margin-bottom:  10px;
+    margin-bottom: 10px;
+}
+
+.edit-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+
+    background: url('../../../assets/icons/editBtn.svg') no-repeat center center;
+}
+
+.edit-btn:hover {
+    background: url('../../../assets/icons/editBtnHover.svg') no-repeat center center;
 }
