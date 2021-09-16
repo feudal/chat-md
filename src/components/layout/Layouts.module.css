@@ -1,11 +1,6 @@
-.wrapper {
-    display: grid;
-    width: 100%;
-    grid-template-columns: 80px 1fr;
-}
 .main {
-    flex-grow: 1;
     background-color: #191A21;
     color: #fff;
     position: relative;
+    margin-left: 80px;
 }
