@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: flex-end;
 }
-span {
+.span {
     display: block;
     font-family: Sarabun, serif;
     font-style: normal;
