@@ -12,11 +12,11 @@ const ProfileForm = (props) => {
             </label>
             <label className={classes.label}>
                 <span className={classes.span}>Nume prenume</span>
-                <input className={classes.input} type="text" placeholder={profile.name ? profile.name : 'completati'} />
+                <input className={classes.input} type="text" defaultValue={profile.name} placeholder='completati' />
             </label>
             <label className={classes.label}>
                 <span className={classes.span}>Telefon</span>
-                <input className={classes.input} type="text" placeholder={profile.mobile ? profile.mobile : 'completati'} />
+                <input className={classes.input} type="text" defaultValue={profile.mobile} placeholder='completati' />
             </label>
             <label className={classes.label}>
                 <span className={classes.span}>Data de naștere</span>
