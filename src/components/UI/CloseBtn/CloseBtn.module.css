@@ -1,0 +1,10 @@
+.close-btn {
+    cursor: pointer;
+    height: 24px;
+    width: 24px;
+    background: url("../../../assets/icons/close.svg") no-repeat center center;
+
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
