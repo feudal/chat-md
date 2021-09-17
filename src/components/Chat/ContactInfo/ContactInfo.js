@@ -3,11 +3,18 @@ import classes from './ContactInfo.module.css';
 import ContactSetting from "./ContactSetting/ContactSetting";
 import Frame from "./ContactSetting/Frame/Frame";
 import CloseBtn from "../../UI/CloseBtn/CloseBtn";
+import {useDispatch} from 'react-redux';
+import {uiActions} from "../../../store/ui";
 
 const ContactInfo = () => {
+    const dispatch = useDispatch();
+    const closeHandler = () => {
+        dispatch(uiActions.closeContactInfo());
+    }
+
     return (
         <div className={classes['contact-info']}>
-            <CloseBtn/>
+            <CloseBtn close={closeHandler} />
             <Frame name='Maria Botgros'/>
             <ContactSetting
                 deactivateLink={true}
