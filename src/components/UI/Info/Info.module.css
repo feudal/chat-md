@@ -1,0 +1,6 @@
+.info {
+    cursor: pointer;
+    height: 24px;
+    width: 24px;
+    background: url("../../../assets/icons/info.svg") no-repeat center center;
+}
