@@ -12,6 +12,7 @@ const AllMessagesList = (props) => {
         if(item.name === 'Tu'){
             return (
                 <MyMessage
+                    key={hour+min}
                     name={item.name}
                     text={item.message}
                     hour={hour}
