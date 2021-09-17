@@ -3,17 +3,26 @@ import classes from './ContactInfo.module.css';
 import ContactSetting from "./ContactSetting/ContactSetting";
 import Frame from "./ContactSetting/Frame/Frame";
 import CloseBtn from "../../UI/CloseBtn/CloseBtn";
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {uiActions} from "../../../store/ui";
+import classNames from "classnames/bind";
+
 
 const ContactInfo = () => {
+    const showContactInfo = useSelector(state => state.ui.showContactInfo);
     const dispatch = useDispatch();
     const closeHandler = () => {
         dispatch(uiActions.closeContactInfo());
     }
 
+    let classNameBound = classNames.bind(classes);
+    const classForContactInfo = classNameBound(
+        classes['contact-info'],
+        {'contact-info--opened' : showContactInfo},
+        {'contact-info--closed' : !showContactInfo});
+
     return (
-        <div className={classes['contact-info']}>
+        <div className={classForContactInfo}>
             <CloseBtn close={closeHandler} />
             <Frame name='Maria Botgros'/>
             <ContactSetting

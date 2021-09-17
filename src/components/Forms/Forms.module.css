@@ -111,8 +111,7 @@ input:-webkit-autofill:active {
 }
 
 .error {
-    /*display: block;*/
-    display: none;
+    display: block;
     font-weight: bold;
     color: #6d0000;
     position: relative;
