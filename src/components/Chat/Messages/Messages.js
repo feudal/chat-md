@@ -1,10 +1,11 @@
 import React from 'react';
 import classes from './Messages.module.css';
+import TopBar from "./TopBar/TopBar";
 
 const Messages = () => {
     return (
         <div className={classes.messages}>
-            message
+            <TopBar/>
         </div>
     );
 };
