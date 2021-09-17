@@ -2,6 +2,24 @@
     border-right: 1px solid #2D2E38;
     padding: 20px 0;
     width: 500px;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.contacts {
+    scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #ffffff50;
+    border-radius: 3px;
+}
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #2D2E38;
 }
 .title {
     font-family: Sahitya, serif;
