@@ -6,7 +6,7 @@ const ContactsList = (props) => {
     let contactList;
     if(props.list) {
         contactList = props.list.map((item) => {
-            return <ContactItem name={item.name}/>
+            return <ContactItem key={item.name} name={item.name}/>
         });
     }
 
