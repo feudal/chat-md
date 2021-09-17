@@ -1,0 +1,49 @@
+.form {
+    display: flex;
+    padding: 20px;
+    border-top: 1px solid #2D2E38;
+}
+
+.form * {
+    font-family: Sarabun, serif;
+    font-size: 16px;
+    line-height: 21px;
+    font-style: normal;
+    font-weight: 500;
+    text-align: left;
+    outline: 0;
+}
+
+.input {
+    flex-grow: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    color: #fff;
+    margin-right: 10px;
+    padding: 10px;
+}
+
+.input::placeholder {
+    color: rgba(255, 255, 255, 0.35);    
+}
+
+.button {
+    cursor: pointer;
+    background: #3337CC;
+    border-radius: 5px;
+    padding: 10px 20px;
+    color: #fff;
+}
+
+.button:after {
+    content: '';
+    display: inline-block;
+    width: 13px;
+    height: 12px;
+    margin-left: 10px;
+    background: url('../../../../assets/icons/Trimite.svg') no-repeat center center;
+}
+
+.button:hover {
+    background: #252893;
+}

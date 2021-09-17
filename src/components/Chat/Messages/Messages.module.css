@@ -1,3 +1,8 @@
 .messages {
     width: 100%;
 }
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 70px);
+}

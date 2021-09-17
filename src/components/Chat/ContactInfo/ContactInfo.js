@@ -2,10 +2,12 @@ import React from 'react';
 import classes from './ContactInfo.module.css';
 import ContactSetting from "./ContactSetting/ContactSetting";
 import Frame from "./ContactSetting/Frame/Frame";
+import CloseBtn from "../../UI/CloseBtn/CloseBtn";
 
 const ContactInfo = () => {
     return (
         <div className={classes['contact-info']}>
+            <CloseBtn/>
             <Frame name='Maria Botgros'/>
             <ContactSetting
                 deactivateLink={true}
