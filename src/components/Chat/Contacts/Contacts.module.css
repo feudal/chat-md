@@ -14,12 +14,13 @@
     width: 6px;
 }
 ::-webkit-scrollbar-thumb {
-    background-color: #ffffff50;
+    /*background-color: #ffffff20;*/
     border-radius: 3px;
+    border: 1px solid #ffffff50;
 }
 ::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background-color: #2D2E38;
+    background-color: transparent;
+
 }
 .title {
     font-family: Sahitya, serif;
