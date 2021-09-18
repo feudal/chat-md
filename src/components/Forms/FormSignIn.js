@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './Forms.module.css';
 import {Link} from "react-router-dom";
 import useInput from "../../hooks/use-input";
+import TogglePassword from "../UI/TogglePassword/TogglePassword";
 
 function validateEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -46,7 +47,7 @@ const FormSignIn = (props) => {
         <form onSubmit={formHandler} className={classes.form}>
             <h2 className={classes.title}>Logare</h2>
             <label className={classes.label}>
-                Email
+                <span>Email</span>
                 <input
                     onBlur={emailInputBlurHandler}
                     onChange={emailChangeHandler}
@@ -55,12 +56,14 @@ const FormSignIn = (props) => {
             </label>
             {emailHasError && <span className={classes.error}>Format de email invalid!</span>}
             <label className={classes.label}>
-                Parola
-                <input
-                    onBlur={passwordInputBlurHandler}
-                    onChange={passwordChangeHandler}
-                    className={`${classes.input} ${!passwordHasError ? '' : classes['input--error']}`}
-                    type="password"/>
+                <span>Parola</span>
+                <TogglePassword>
+                    <input
+                        onBlur={passwordInputBlurHandler}
+                        onChange={passwordChangeHandler}
+                        className={`${classes.input} ${!passwordHasError ? '' : classes['input--error']}`}
+                        type="password"/>
+                </TogglePassword>
             </label>
             {passwordHasError && <span className={classes.error}>Parola prea scurta! (minim 6 simboluri)</span>}
             <input className={classes.button} type="submit" value='Logare'/>

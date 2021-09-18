@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from "./Forms.module.css";
 import useInput from "../../hooks/use-input";
+import TogglePassword from "../UI/TogglePassword/TogglePassword";
 
 function validatePassword(password) {
     return password.trim().length > 5;
@@ -43,21 +44,25 @@ const FormChangePassword = () => {
             className={classes.form}>
             <h2 className={classes.title}>Schimbare parolă</h2>
             <label className={classes.label}>
-                Parola veche
-                <input
-                    onBlur={oldPasswordInputBlurHandler}
-                    onChange={oldPasswordChangeHandler}
-                    className={`${classes.input} ${!oldPasswordHasError ? '' : classes['input--error']}`}
-                    type="password"/>
+                <span>Parola veche</span>
+                <TogglePassword>
+                    <input
+                        onBlur={oldPasswordInputBlurHandler}
+                        onChange={oldPasswordChangeHandler}
+                        className={`${classes.input} ${!oldPasswordHasError ? '' : classes['input--error']}`}
+                        type="password"/>
+                </TogglePassword>
             </label>
             {oldPasswordHasError && <span className={classes.error}>Parola e prea scurta!</span>}
             <label className={classes.label}>
-                Parola nouă
-                <input
-                    onBlur={newPasswordInputBlurHandler}
-                    onChange={newPasswordChangeHandler}
-                    className={`${classes.input} ${!newPasswordHasError ? '' : classes['input--error']}`}
-                    type="password"/>
+                <span>Parola nouă</span>
+                <TogglePassword>
+                    <input
+                        onBlur={newPasswordInputBlurHandler}
+                        onChange={newPasswordChangeHandler}
+                        className={`${classes.input} ${!newPasswordHasError ? '' : classes['input--error']}`}
+                        type="password"/>
+                </TogglePassword>
             </label>
             {newPasswordHasError && <span className={classes.error}>Parola e prea scurta!</span>}
             <input className={classes.button} type="submit" value='Schimbare parolă'/>

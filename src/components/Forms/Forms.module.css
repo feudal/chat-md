@@ -29,6 +29,10 @@
     font-size: 18px;
     line-height: 22px;
 }
+.label span {
+    display: block;
+    margin-bottom: 5px;
+}
 
 .input {
     color: #000;
@@ -37,7 +41,7 @@
 
     width: 100%;
     padding: 6px 10px;
-    margin: 5px 0 12px;
+    margin-bottom: 12px;
     border-radius: 3px;
 
     outline: none;
@@ -111,10 +115,12 @@ input:-webkit-autofill:active {
 }
 
 .error {
+    text-transform: uppercase;
     display: block;
     font-weight: bold;
     color: #6d0000;
     position: relative;
-    top: -5px;
+    /*top: -5px;*/
+    margin-bottom: 10px;
 }
 

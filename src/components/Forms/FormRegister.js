@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './Forms.module.css';
 import {Link} from "react-router-dom";
 import useInput from "../../hooks/use-input";
+import TogglePassword from "../UI/TogglePassword/TogglePassword";
 
 function validateEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -58,7 +59,7 @@ const FormRegister = (props) => {
         <form className={classes.form} onSubmit={formHandler}>
             <h2 className={classes.title}>Creare account</h2>
             <label className={classes.label}>
-                Email
+                <span>Email</span>
                 <input
                     onBlur={emailInputBlurHandler}
                     onChange={emailChangeHandler}
@@ -67,21 +68,26 @@ const FormRegister = (props) => {
             </label>
             {emailHasError && <span className={classes.error}>Format de email invalid!</span>}
             <label className={classes.label}>
-                Parola
-                <input
-                    onChange={passwordChangeHandler}
-                    onBlur={passwordInputBlurHandler}
-                    className={`${classes.input} ${!passwordHasError ? '' : classes['input--error']}`}
-                    type="password"/>
+                <span>Parola</span>
+                <TogglePassword>
+                    <input
+                        onChange={passwordChangeHandler}
+                        onBlur={passwordInputBlurHandler}
+                        className={`${classes.input} ${!passwordHasError ? '' : classes['input--error']}`}
+                        type="password"
+                    />
+                </TogglePassword>
             </label>
             {passwordHasError && <span className={classes.error}>Parola prea scurta! (minim 6 simboluri)</span>}
             <label className={classes.label}>
-                Confirmă parola
-                <input
-                    onBlur={passwordConfirmInputBlurHandler}
-                    onChange={passwordConfirmChangeHandler}
-                    className={`${classes.input} ${!passwordConfirmHasError ? '' : classes['input--error']}`}
-                    type="password"/>
+                <span>Confirmă parola</span>
+                <TogglePassword>
+                    <input
+                        onBlur={passwordConfirmInputBlurHandler}
+                        onChange={passwordConfirmChangeHandler}
+                        className={`${classes.input} ${!passwordConfirmHasError ? '' : classes['input--error']}`}
+                        type="password"/>
+                </TogglePassword>
             </label>
             {passwordConfirmHasError && <span className={classes.error}>Parola nu coencide!</span>}
             <input className={classes.button} type="submit" value='Inregistrare'/>
