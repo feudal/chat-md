@@ -1,0 +1,50 @@
+.notification {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 64px;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 60px 20px 20px;
+    transition: all 1s;
+
+    background-color: rgba(255, 255, 255, 0.13);
+    border-bottom: 2px solid #FFFFFF10;
+}
+
+.notification--error {
+    background: #ff000025;
+    border-bottom: 2px solid #FF000010;
+}
+
+.notification--success {
+    background: #02FA1B30;
+    border-bottom: 2px solid #02FA1B10;
+}
+
+.notification--info {
+    background: #02EBFA30;
+    border-bottom: 2px solid #02EBFA10;
+}
+
+.notification--open {
+    opacity: 1;
+}
+
+.notification--closed {
+    opacity: 0;
+}
+
+.notification--closed * {
+    pointer-events: none;
+}
+
+.text {
+    background: transparent;
+    display: inline-block;
+    color: #fff;
+}
