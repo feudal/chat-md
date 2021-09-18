@@ -5,26 +5,29 @@ import {useDispatch, useSelector} from "react-redux";
 import {uiActions} from "../../../store/ui";
 import classNames from "classnames/bind";
 
-const MessageNotification = (props) => {
+const MessageNotification = () => {
     const dispatch = useDispatch();
     const toggleMessageNotificationHandler = () => {
-        dispatch(uiActions.toggleMessageNotification());
+        dispatch(uiActions.closeMessageNotification());
     }
 
+    const messageNotificationState = useSelector(state => state.ui.messageNotification)
     const showMessageNotification = useSelector(state => state.ui.showMessageNotification);
+
     const classNameBound = classNames.bind(classes);
     const classForMessageNotification = classNameBound(
         classes.notification,
         {'notification--open': showMessageNotification},
         {'notification--closed': !showMessageNotification},
-        {'notification--error': props.type === 'error'},
-        {'notification--success': props.type === 'success'},
-        {'notification--info': props.type === 'info'})
+        {'notification--error': messageNotificationState.type === 'Error'},
+        {'notification--success': messageNotificationState.type === 'Success'},
+        {'notification--info': messageNotificationState.type === 'Info'});
+
     return (
         <div className={classForMessageNotification}>
             <CloseBtn close={toggleMessageNotificationHandler}/>
-            <span className={classes.text}>{props.title}</span>
-            <span className={classes.text}>{props.message}</span>
+            <span className={classes.text}>{messageNotificationState.type}</span>
+            <span className={classes.text}>{messageNotificationState.message}</span>
         </div>
     );
 };
