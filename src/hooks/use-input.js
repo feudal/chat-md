@@ -1,10 +1,10 @@
 import {useState} from "react";
 
-const useInput = (validateFunction) => {
+function useInput (validateFunction, enteredPassword)  {
     const [enteredValue, setEnteredValue] = useState('');
     const [isTouched, setIsTouched] = useState(false);
 
-    const valueIsValid = validateFunction(enteredValue);
+    let valueIsValid = validateFunction(enteredValue, enteredPassword);
     const hasError = !valueIsValid && isTouched;
 
     const valueChangeHandler = (event) => {
@@ -16,6 +16,7 @@ const useInput = (validateFunction) => {
     return {
         value: enteredValue,
         hasError,
+        valueIsValid,
         valueChangeHandler,
         valueInputBlurHandler
     }

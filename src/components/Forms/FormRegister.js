@@ -1,10 +1,10 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import classes from './Forms.module.css';
 import {Link} from "react-router-dom";
 import useInput from "../../hooks/use-input";
 
 function validateEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
 }
 
@@ -12,15 +12,15 @@ function validatePassword(password) {
     return password.trim().length > 5;
 }
 
-function validatePasswordConfirm(args) {
-    const [pass, passConfirm] = args;
-    return pass === passConfirm;
+function validatePasswordConfirm(passConfirm, pass) {
+    return passConfirm === pass;
 }
 
 const FormRegister = (props) => {
     const {
         value: enteredEmail,
         hasError: emailHasError,
+        valueIsValid: emailIsValid,
         valueChangeHandler: emailChangeHandler,
         valueInputBlurHandler: emailInputBlurHandler
     } = useInput(validateEmail);
@@ -28,20 +28,27 @@ const FormRegister = (props) => {
     const {
         value: enteredPassword,
         hasError: passwordHasError,
+        valueIsValid: passwordIsValid,
         valueChangeHandler: passwordChangeHandler,
         valueInputBlurHandler: passwordInputBlurHandler
     } = useInput(validatePassword);
 
-    const passwordConfirmRef = useRef();
     const {
         value: enteredPasswordConfirm,
         hasError: passwordConfirmHasError,
+        valueIsValid: passwordConfirmIsValid,
         valueChangeHandler: passwordConfirmChangeHandler,
         valueInputBlurHandler: passwordConfirmInputBlurHandler
-    } = useInput(validatePasswordConfirm);
+    } = useInput(validatePasswordConfirm, enteredPassword);
 
     const formHandler = (event) => {
         event.preventDefault();
+        if (!emailIsValid || !passwordIsValid || !passwordConfirmIsValid) {
+            emailInputBlurHandler();
+            passwordInputBlurHandler();
+            passwordConfirmInputBlurHandler();
+            return;
+        }
         console.log(enteredEmail);
         console.log(enteredPassword);
         console.log(enteredPasswordConfirm);
@@ -71,7 +78,6 @@ const FormRegister = (props) => {
             <label className={classes.label}>
                 Confirmă parola
                 <input
-                    ref={passwordConfirmRef}
                     onBlur={passwordConfirmInputBlurHandler}
                     onChange={passwordConfirmChangeHandler}
                     className={`${classes.input} ${!passwordConfirmHasError ? '' : classes['input--error']}`}
