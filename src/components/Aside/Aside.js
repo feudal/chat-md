@@ -7,11 +7,16 @@ import CalendarIcon from "../Icons/CalendarIcon";
 import SettingIcon from "../Icons/SettingIcon";
 import LogoutIcon from "../Icons/LogoutIcon";
 import UserIcon from "../User/UserIcon";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {authActions} from "../../store/auth";
 
 const Aside = () => {
     const userIsLoggedIn = useSelector(state => state.auth.isLoggedIn);
+    const dispatch = useDispatch();
 
+    const logOutHandler = () => {
+        dispatch(authActions.logout());
+    }
     return (
         <aside className={classes.aside}>
             <Logo/>
@@ -50,13 +55,12 @@ const Aside = () => {
                             to='/profile'>
                             <UserIcon/>
                         </NavLink>
-                        <NavLink
+                        <button
+                            onClick={logOutHandler}
                             title="Logout"
-                            className={classes['logout-link']}
-                            activeClassName={classes.active}
-                            to='/logout'>
+                            className={classes['logout']}>
                             <LogoutIcon/>
-                        </NavLink>
+                        </button>
                     </>
                 )}
             </nav>

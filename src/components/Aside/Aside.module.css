@@ -46,7 +46,8 @@
 
 /************************************* other links  ***************************************/
 
-.logout-link {
+.logout {
+    cursor: pointer;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -59,10 +60,11 @@
     transition: all .3s;
 }
 
-.logout-link:hover {
+.logout:hover {
     background: #5D61ED;
 }
-.logout-link.active {
+
+.logout.active {
     background: #5D61ED;
 }
 
