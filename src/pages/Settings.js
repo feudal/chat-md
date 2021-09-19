@@ -1,7 +1,10 @@
 import React from 'react';
 import ChangeSettings from "../components/Settings/ChangeSettings/ChangeSettings";
+import {useSelector} from "react-redux";
 
 const Settings = () => {
+    const userIsLoggedIn = useSelector(state => state.auth.isLoggedIn);
+
     return (
         <div>
             <ChangeSettings
@@ -9,11 +12,11 @@ const Settings = () => {
                 span='Dark mode'
                 toggle={true}
             />
-            <ChangeSettings
+            {userIsLoggedIn && (<ChangeSettings
                 title='Date personale'
                 link='Schimare parolă'
                 toggle={false}
-            />
+            />)}
         </div>
     );
 };
