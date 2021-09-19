@@ -13,13 +13,12 @@ const MessageNotification = () => {
     }
 
     const messageNotificationState = useSelector(state => state.ui.messageNotification);
-    const showMessageNotification = useSelector(state => state.ui.showMessageNotification);
 
     const classNameBound = classNames.bind(classes);
     const classForMessageNotification = classNameBound(
         classes.notification,
-        {'notification--open': showMessageNotification},
-        {'notification--closed': !showMessageNotification},
+        {'notification--open': messageNotificationState.show},
+        {'notification--closed': !messageNotificationState.show},
         {'notification--error': messageNotificationState.type === 'Error'},
         {'notification--success': messageNotificationState.type === 'Success'},
         {'notification--info': messageNotificationState.type === 'Info'},

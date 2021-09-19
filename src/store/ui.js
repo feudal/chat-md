@@ -2,8 +2,8 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
     showContactInfo: true,
-    showMessageNotification: false,
     messageNotification: {
+        show: false,
         type: null,
         message: null
     }
@@ -20,12 +20,13 @@ const uiSlice = createSlice({
             state.showContactInfo = true;
         },
         closeMessageNotification(state) {
-            state.showMessageNotification = false;
+            state.messageNotification.show = false;
         },
         openMessageNotification(state) {
-            state.showMessageNotification = true;
+            state.messageNotification.show = true;
         },
         setMessageNotification(state, action) {
+            state.messageNotification.show = true;
             state.messageNotification.type = action.payload.type;
             state.messageNotification.message = action.payload.message;
         }

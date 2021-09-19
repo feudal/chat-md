@@ -9,7 +9,7 @@ import {uiActions} from "../store/ui";
 const Entrance = () => {
     const [isLoginForm, setIsLoginForm] = useState(true);
     const dispatch = useDispatch();
-    const messageNotificationState = useSelector(state => state.ui.messageNotification);
+    const messageNotificationState = useSelector(state => state.ui.messageNotification.show);
 
     const onSwitchFormHandler = () => {
         setIsLoginForm(!isLoginForm);
