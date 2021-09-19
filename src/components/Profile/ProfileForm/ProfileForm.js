@@ -24,7 +24,7 @@ const ProfileForm = (props) => {
             </label>
             <label className={classes.label}>
                 <span className={classes.span}>Despre mine</span>
-                <textarea className={classes.textarea} value={profile.text}/>
+                <textarea className={classes.textarea} defaultValue={profile.text}/>
             </label>
             <input className={classes.button} type="submit" value='Applica schimbarile'/>
             <div className={classes['form-group']}>
