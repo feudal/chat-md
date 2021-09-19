@@ -12,7 +12,7 @@ const MessageNotification = () => {
         dispatch(uiActions.closeMessageNotification());
     }
 
-    const messageNotificationState = useSelector(state => state.ui.messageNotification)
+    const messageNotificationState = useSelector(state => state.ui.messageNotification);
     const showMessageNotification = useSelector(state => state.ui.showMessageNotification);
 
     const classNameBound = classNames.bind(classes);
