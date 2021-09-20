@@ -89,7 +89,12 @@ const FormSignIn = (props) => {
             }
         }).then((data) => {
             if(data) {
-                dispatch(authActions.login(data.idToken));
+                dispatch(authActions.login({
+                    idToken: data.idToken,
+                }));
+                setTimeout(() => dispatch(authActions.logout()), +data.expiresIn * 1000);
+
+                console.log(data.expiresIn);
             }
         })
     }

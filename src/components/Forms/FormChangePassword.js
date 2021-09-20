@@ -62,7 +62,12 @@ const FormChangePassword = () => {
                 }));
             }
         }).then(data => {
-            dispatch(authActions.login(data.idToken));
+            if(data) {
+                dispatch(authActions.login({
+                    idToken: data.idToken,
+                }));
+                setTimeout(() => dispatch(authActions.logout()), +data.expiresIn * 1000);
+            }
         })
     }
 

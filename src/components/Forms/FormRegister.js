@@ -101,8 +101,10 @@ const FormRegister = (props) => {
             }
         }).then((data) => {
             if(data) {
-                console.log(data.idToken);
-                dispatch(authActions.login(data.idToken));
+                dispatch(authActions.login({
+                    idToken: data.idToken,
+                }));
+                setTimeout(() => dispatch(authActions.logout()), +data.expiresIn * 1000);
             }
         })
     }
