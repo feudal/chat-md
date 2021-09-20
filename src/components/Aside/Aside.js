@@ -9,13 +9,16 @@ import LogoutIcon from "../Icons/LogoutIcon";
 import UserIcon from "../User/UserIcon";
 import {useDispatch, useSelector} from "react-redux";
 import {authActions} from "../../store/auth";
+import {useHistory}  from 'react-router-dom';
 
 const Aside = () => {
+    const history = useHistory();
     const userIsLoggedIn = useSelector(state => state.auth.isLoggedIn);
     const dispatch = useDispatch();
 
     const logOutHandler = () => {
         dispatch(authActions.logout());
+        history.push('/');
     }
     return (
         <aside className={classes.aside}>

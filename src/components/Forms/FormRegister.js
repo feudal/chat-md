@@ -3,6 +3,10 @@ import classes from './Forms.module.css';
 import {Link} from "react-router-dom";
 import useInput from "../../hooks/use-input";
 import TogglePassword from "../UI/TogglePassword/TogglePassword";
+import {uiActions} from "../../store/ui";
+import {useDispatch} from "react-redux";
+import {authActions} from "../../store/auth";
+
 
 function validateEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -18,6 +22,8 @@ function validatePasswordConfirm(passConfirm, pass) {
 }
 
 const FormRegister = (props) => {
+    const dispatch = useDispatch();
+
     const {
         value: enteredEmail,
         hasError: emailHasError,
@@ -35,7 +41,7 @@ const FormRegister = (props) => {
     } = useInput(validatePassword);
 
     const {
-        value: enteredPasswordConfirm,
+        // value: enteredPasswordConfirm,
         hasError: passwordConfirmHasError,
         valueIsValid: passwordConfirmIsValid,
         valueChangeHandler: passwordConfirmChangeHandler,
@@ -50,9 +56,55 @@ const FormRegister = (props) => {
             passwordConfirmInputBlurHandler();
             return;
         }
-        console.log(enteredEmail);
-        console.log(enteredPassword);
-        console.log(enteredPasswordConfirm);
+
+        dispatch(uiActions.setMessageNotification({
+            // show: true,
+            type: 'Loading',
+            message: 'Trimitem datele!'
+        }));
+
+        const API_KEY = 'AIzaSyAb00BknyYAFZ9_dz_idnW4mqPLdpPxdns';
+        fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + API_KEY,
+            {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: enteredEmail,
+                    password: enteredPassword,
+                    returnSecureToken: true,
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        ).then(res => {
+            if (res.ok) {
+                dispatch(uiActions.setMessageNotification({
+                    type: 'Success',
+                    message: 'Contul a fost creat!'
+                }));
+                return res.json();
+
+            } else {
+                res.json().then(data => {
+                    let errorMessage = 'Creare cont eșuată!';
+                    if (data && data.error && data.error.message) {
+                        errorMessage = data.error.message;
+                    }
+                    if (errorMessage === 'EMAIL_EXISTS') {
+                        errorMessage = 'Așa email există!'
+                    }
+                    dispatch(uiActions.setMessageNotification({
+                        type: 'Error',
+                        message: errorMessage
+                    }));
+                })
+            }
+        }).then((data) => {
+            if(data) {
+                console.log(data.idToken);
+                dispatch(authActions.login(data.idToken));
+            }
+        })
     }
 
     return (
@@ -92,11 +144,11 @@ const FormRegister = (props) => {
             {passwordConfirmHasError && <span className={classes.error}>Parola nu coencide!</span>}
             <input className={classes.button} type="submit" value='Inregistrare'/>
             <div className={classes['form-group']}>
-                <span className={classes.span}>Deja esti membru?</span>
+                <span className={classes.span}>Deja ești membru?</span>
                 <Link
                     onClick={props.switchForm}
                     className={classes.link}
-                    to='/'>Intra in cont</Link>
+                    to='/'>Intră în cont</Link>
             </div>
         </form>
     );

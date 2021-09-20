@@ -2,20 +2,17 @@ import React from 'react';
 import classes from "./Forms.module.css";
 import useInput from "../../hooks/use-input";
 import TogglePassword from "../UI/TogglePassword/TogglePassword";
+import {useDispatch, useSelector} from "react-redux";
+import {uiActions} from "../../store/ui";
+import {authActions} from "../../store/auth";
 
 function validatePassword(password) {
     return password.trim().length > 5;
 }
 
 const FormChangePassword = () => {
-    const {
-        value: oldPasswordValue,
-        hasError: oldPasswordHasError,
-        valueIsValid: oldPasswordIsValid,
-        valueChangeHandler: oldPasswordChangeHandler,
-        valueInputBlurHandler: oldPasswordInputBlurHandler,
-
-    } = useInput(validatePassword);
+    const idToken = useSelector(state => state.auth.idToken);
+    const dispatch = useDispatch();
 
     const {
         value: newPasswordValue,
@@ -28,14 +25,45 @@ const FormChangePassword = () => {
 
     const formHandler = (event) => {
         event.preventDefault();
-        if (!oldPasswordIsValid || !newPasswordIsValid) {
+        if (!newPasswordIsValid) {
             newPasswordInputBlurHandler();
-            oldPasswordInputBlurHandler();
             return;
         }
-        event.preventDefault();
-        console.log(oldPasswordValue);
-        console.log(newPasswordValue);
+        dispatch(uiActions.setMessageNotification({
+            type: 'Loading',
+            message: 'Trimitem datele!'
+        }));
+
+        const API_KEY = 'AIzaSyAb00BknyYAFZ9_dz_idnW4mqPLdpPxdns';
+        fetch('https://identitytoolkit.googleapis.com/v1/accounts:update?key=' + API_KEY,
+            {
+                method: 'POST',
+                body: JSON.stringify({
+                    idToken,
+                    password: newPasswordValue,
+                    returnSecurityToken: true,
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        ).then(res => {//check errors
+            console.log(res);
+            if (res.ok) {
+                dispatch(uiActions.setMessageNotification({
+                    type: 'Success',
+                    message: 'response.ok = true'
+                }));
+                return res.json();
+            } else {
+                dispatch(uiActions.setMessageNotification({
+                    type: 'Error',
+                    message: 'Erroare schimbare parolă'
+                }));
+            }
+        }).then(data => {
+            dispatch(authActions.login(data.idToken));
+        })
     }
 
     return (
@@ -43,17 +71,6 @@ const FormChangePassword = () => {
             onSubmit={formHandler}
             className={classes.form}>
             <h2 className={classes.title}>Schimbare parolă</h2>
-            <label className={classes.label}>
-                <span>Parola veche</span>
-                <TogglePassword>
-                    <input
-                        onBlur={oldPasswordInputBlurHandler}
-                        onChange={oldPasswordChangeHandler}
-                        className={`${classes.input} ${!oldPasswordHasError ? '' : classes['input--error']}`}
-                        type="password"/>
-                </TogglePassword>
-            </label>
-            {oldPasswordHasError && <span className={classes.error}>Parola e prea scurta!</span>}
             <label className={classes.label}>
                 <span>Parola nouă</span>
                 <TogglePassword>
