@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import classes from './MessageNotification.module.css';
 import CloseBtn from "../CloseBtn/CloseBtn";
 import {useDispatch, useSelector} from "react-redux";
@@ -7,12 +7,23 @@ import classNames from "classnames/bind";
 import Loader from "../../decoration/Loader/Loader";
 
 const MessageNotification = () => {
+
     const dispatch = useDispatch();
     const toggleMessageNotificationHandler = () => {
         dispatch(uiActions.closeMessageNotification());
     }
 
+    //close messageNotification after 5 second
     const messageNotificationState = useSelector(state => state.ui.messageNotification);
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            dispatch(uiActions.closeMessageNotification());
+        }, 5000);
+
+        return () => {
+            clearTimeout(timeout)
+        }
+    }, [messageNotificationState.show, dispatch]);
 
     const classNameBound = classNames.bind(classes);
     const classForMessageNotification = classNameBound(
