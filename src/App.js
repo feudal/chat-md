@@ -10,32 +10,39 @@ import Settings from "./pages/Settings";
 import Layout from "./components/layout/Layout";
 import NotFound from "./pages/NotFound";
 import ChangePassword from "./pages/ChangePassword";
+import {useSelector} from "react-redux";
 
 function App() {
+    const userIsLoggedIn = useSelector(state => state.auth.isLoggedIn);
+
     return (
         <Layout>
             <Switch>
-                <Route exact path='/' >
+                <Route exact path='/'>
                     <Entrance/>
-                </Route>
-                <Route exact path='/change-password' >
-                    <ChangePassword/>
-                </Route>
-                <Route path='/chat'>
-                    <Chat/>
                 </Route>
                 <Route path='/calendar'>
                     <Calendar/>
                 </Route>
-                <Route exact path='/profile'>
-                    <Profile/>
-                </Route>
-                <Route path='/edit-profile'>
-                    <EditProfile/>
-                </Route>
                 <Route path='/settings'>
                     <Settings/>
                 </Route>
+                {userIsLoggedIn && (
+                    <>
+                        <Route exact path='/change-password'>
+                            <ChangePassword/>
+                        </Route>
+                        <Route path='/chat'>
+                            <Chat/>
+                        </Route>
+                        <Route exact path='/profile'>
+                            <Profile/>
+                        </Route>
+                        <Route path='/edit-profile'>
+                            <EditProfile/>
+                        </Route>
+                    </>
+                )}
                 <Route path='*'>
                     <NotFound/>
                 </Route>
