@@ -5,7 +5,7 @@ import useInput from "../../hooks/use-input";
 import TogglePassword from "../UI/TogglePassword/TogglePassword";
 import {uiActions} from "../../store/ui";
 import {useDispatch} from "react-redux";
-import {authActions} from "../../store/auth";
+import {authActions, createUserOnServer} from "../../store/auth";
 
 
 function validateEmail(email) {
@@ -101,12 +101,21 @@ const FormRegister = (props) => {
             }
         }).then((data) => {
             if(data) {
+
                 dispatch(authActions.login({
+                    id: data.localId,
                     idToken: data.idToken,
                 }));
-                setTimeout(() => dispatch(authActions.logout()), +data.expiresIn * 1000);
+
+                createUserOnServer({
+                    id: data.localId,
+                    email: data.email,
+                    name: data.email,
+                });
+
+                setTimeout(() => dispatch(authActions.logout()), 3600 * 1000); //one hour;
             }
-        })
+        });
     }
 
     return (
