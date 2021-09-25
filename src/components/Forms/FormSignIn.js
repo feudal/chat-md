@@ -90,11 +90,11 @@ const FormSignIn = (props) => {
         }).then((data) => {
             if(data) {
                 dispatch(authActions.login({
+                    id: data.localId,
                     idToken: data.idToken,
+                    email: data.email,
                 }));
                 setTimeout(() => dispatch(authActions.logout()), +data.expiresIn * 1000);
-
-                console.log(data.expiresIn);
             }
         })
     }

@@ -105,6 +105,7 @@ const FormRegister = (props) => {
                 dispatch(authActions.login({
                     id: data.localId,
                     idToken: data.idToken,
+                    email: data.email,
                 }));
 
                 createUserOnServer({

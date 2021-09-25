@@ -8,6 +8,7 @@ const authState = () => {
     let idToken = localStorage.idToken;
     let isLoggedIn = localStorage.isLoggedIn;
     let timeOfLogOut = localStorage.timeOfLogOut;
+    let email = localStorage.email;
 
     const currentTime = new Date().getTime();
     const timeOfLogOutInStamps = Date.parse(timeOfLogOut);
@@ -16,17 +17,19 @@ const authState = () => {
         idToken = null;
         isLoggedIn = null;
         timeOfLogOut = null;
+        email = null;
     }
-    return [id, idToken, isLoggedIn, timeOfLogOut]
+    return [id, idToken, isLoggedIn, timeOfLogOut, email]
 }
 
-const [id, idToken, isLoggedIn, timeOfLogOut] = authState();
+const [id, idToken, isLoggedIn, timeOfLogOut, email] = authState();
 
 const initialState = {
     id,
     idToken,
     isLoggedIn,
     timeOfLogOut,
+    email,
 }
 
 const authSlice = createSlice({
@@ -38,18 +41,17 @@ const authSlice = createSlice({
             state.idToken = null;
             state.isLoggedIn = false;
             state.timeOfLogOut = null;
-            localStorage.removeItem('id');
-            localStorage.removeItem('idToken');
-            localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('timeOfLogOut');
+            localStorage.clear();
         },
         login(state, action) {
             state.id = action.payload.id;
             state.idToken = action.payload.idToken;
             state.isLoggedIn = true;
+            state.email = action.payload.email;
             localStorage.setItem('id', action.payload.id);
             localStorage.setItem('idToken', action.payload.idToken);
             localStorage.setItem('isLoggedIn', true);
+            localStorage.setItem('email', action.payload.email);
             let date = new Date();
             date = new Date(date.setHours(date.getHours() + 1)); //add one hour
             localStorage.timeOfLogOut = date;

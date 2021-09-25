@@ -48,7 +48,6 @@ const FormChangePassword = () => {
                 }
             }
         ).then(res => {//check errors
-            console.log(res);
             if (res.ok) {
                 dispatch(uiActions.setMessageNotification({
                     type: 'Success',
@@ -64,6 +63,7 @@ const FormChangePassword = () => {
         }).then(data => {
             if(data) {
                 dispatch(authActions.login({
+                    id: data.localId,
                     idToken: data.idToken,
                 }));
                 setTimeout(() => dispatch(authActions.logout()), +data.expiresIn * 1000);
