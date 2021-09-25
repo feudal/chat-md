@@ -4,9 +4,10 @@ import ContactItem from "./ContactItem/ContactItem";
 
 const ContactsList = (props) => {
     let contactList;
+
     if(props.list) {
         contactList = props.list.map((item) => {
-            return <ContactItem key={item.name} name={item.name}/>
+            return <ContactItem key={item.email} contact={item} isFavorite={props.isFavorite}/>
         });
     }
 

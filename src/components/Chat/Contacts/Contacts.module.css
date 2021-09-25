@@ -30,3 +30,8 @@
     font-weight: 700;
     text-align: center;
 }
+
+.server-error {
+    color: #EF5E5E;
+    padding: 20px;
+}

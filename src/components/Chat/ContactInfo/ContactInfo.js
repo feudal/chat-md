@@ -14,20 +14,25 @@ const ContactInfo = () => {
     const closeHandler = () => {
         dispatch(uiActions.closeContactInfo());
     }
+    const currentUser = useSelector(state => state.user.currentContact);
 
     let classNameBound = classNames.bind(classes);
     const classForContactInfo = classNameBound(
         classes['contact-info'],
-        {'contact-info--opened' : showContactInfo},
-        {'contact-info--closed' : !showContactInfo});
+        {'contact-info--opened': showContactInfo},
+        {'contact-info--closed': !showContactInfo});
 
     return (
         <div className={classForContactInfo}>
-            <CloseBtn close={closeHandler} />
-            <Frame name='Maria Botgros'/>
+            <CloseBtn close={closeHandler}/>
+            <Frame
+                name={currentUser.name}
+                email={currentUser.email}
+            />
             <ContactSetting
                 deactivateLink={true}
                 haveToggle={true}
+                toggleStateIsTrue={currentUser.isFavorite || false}
                 title='Adăugare la favorite'/>
             <ContactSetting
                 haveToggle={false}
