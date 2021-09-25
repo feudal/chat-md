@@ -4,12 +4,14 @@
     align-items: center;
     padding: 30px;
 }
+
 .img {
     width: 120px;
     height: 120px;
     border: 1px solid #888A8F;
     border-radius: 50%;
 }
+
 .name {
     font-family: Sahitya, serif;
     font-size: 24px;
@@ -20,4 +22,12 @@
 
     color: #E5E5E8;
     margin-top: 20px;
+}
+
+.contact {
+    color: #38AC94;
+}
+
+.email-link:hover {
+    text-decoration: underline;
 }
