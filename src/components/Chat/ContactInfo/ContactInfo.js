@@ -15,6 +15,12 @@ const ContactInfo = () => {
         dispatch(uiActions.closeContactInfo());
     }
     const currentUser = useSelector(state => state.user.currentContact);
+    const favList = useSelector(state => state.user.userFavoriteContactList);
+    let isFavoriteContact = false;
+    for (let i = 0; i < favList.length; i++) {
+        if (favList[i] === currentUser.email)
+            isFavoriteContact = true;
+    }
 
     let classNameBound = classNames.bind(classes);
     const classForContactInfo = classNameBound(
@@ -32,7 +38,7 @@ const ContactInfo = () => {
             <ContactSetting
                 deactivateLink={true}
                 haveToggle={true}
-                toggleStateIsTrue={currentUser.isFavorite || false}
+                toggleStateIsTrue={isFavoriteContact}
                 title='Adăugare la favorite'/>
             <ContactSetting
                 haveToggle={false}

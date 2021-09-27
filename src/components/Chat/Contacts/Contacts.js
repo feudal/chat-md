@@ -12,12 +12,12 @@ const Contacts = () => {
     const allContactList = useSelector(state => state.user.allUserContactList);
     const contactList = useSelector(state => state.user.userContactList);
     const favoriteContactList = useSelector(state => state.user.userFavoriteContactList);
+    const blockedContactList = useSelector(state => state.user.userBlockedContactList);
 
     useEffect(() => {
         fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/users-info.json')
             .then(response => {
                 if (response.ok) {
-                    console.log(response);
                     return response.json();
                 } else {
                     setServerError(true);
@@ -32,7 +32,6 @@ const Contacts = () => {
                         email: data[key].email
                     })
                 }
-                // setList(arr);
                 dispatch(userAction.setAllUserContactList(arr));
             });
     }, [dispatch]);
@@ -41,7 +40,6 @@ const Contacts = () => {
         fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json')
             .then(response => {
                 if (response.ok) {
-                    console.log(response);
                     return response.json();
                 } else {
                     setServerError(true);
@@ -50,29 +48,31 @@ const Contacts = () => {
             .then(data => {
                 let arr = [];
                 for (const key in data) {
-                    arr.push(data[key].email);
+                    arr.push(data[key]);
                 }
-                dispatch(userAction.setUserContactList(arr))
-            })
-    }, [dispatch]);
+                let contList = [];
+                let favList = [];
+                let blockList = [];
 
-    useEffect(() => {
-        fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/favorites.json')
-            .then(response => {
-                if (response.ok) {
-                    console.log(response);
-                    return response.json();
-                } else {
-                    setServerError(true);
-                }
-            })
-            .then(data => {
-                let arr = [];
-                for (const key in data) {
-                    arr.push(data[key].email);
-                }
-                dispatch(userAction.setFavoriteContactList(arr));
-            })
+                arr.map(item=> {
+                    if(item.isFavorite === true) {
+                        favList.push(item);
+                        return;
+                    }
+                    if(item.isBlocked === true) {
+                        blockList.push(item);
+                        return;
+                    }
+                    contList.push(item);
+                })
+                contList = contList.map(item => item.email);
+                favList = favList.map(item => item.email);
+                blockList = blockList.map(item => item.email);
+
+                dispatch(userAction.setUserContactList(contList));
+                dispatch(userAction.setFavoriteContactList(favList));
+                dispatch(userAction.setBlockedContactList(blockList));
+            });
     }, [dispatch]);
 
     return (
@@ -84,6 +84,7 @@ const Contacts = () => {
                 <ContactSection
                     favorite={favoriteContactList}
                     contacts={contactList}
+                    blocked={blockedContactList}
                     list={allContactList}
                 />
             )}

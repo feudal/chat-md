@@ -14,11 +14,10 @@ const elementIsInArray = (el, arr) => {
 const ContactSection = (props) => {
     const favoriteList = props.list.filter((item) => elementIsInArray(item.email, props.favorite));
     const contactList = props.list.filter((item) => elementIsInArray(item.email, props.contacts));
+    // const blockedList = props.list.filter((item) => elementIsInArray(item.email, props.blocked));
 
-    const elementsThatIsNotInAllList = [...props.favorite, ...props.contacts];
+    const elementsThatIsNotInAllList = [...props.favorite, ...props.contacts, ...props.blocked, localStorage.email]; //localStorage.email is active user
     let otherUsersList = props.list.filter((item) => !elementIsInArray(item.email, elementsThatIsNotInAllList));
-    //delete current user from contact list
-    otherUsersList = otherUsersList.filter((item) => !elementIsInArray(item.email, [localStorage.email]));
 
     return (
         <section className={classes.section}>

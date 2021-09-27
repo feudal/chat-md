@@ -6,13 +6,8 @@ import {userAction} from "../../../../../../store/user";
 
 const ContactItem = (props) => {
     const dispatch = useDispatch();
-    let contact = props.contact;
-    contact = {
-        ...contact,
-        isFavorite: props.isFavorite || false,
-    }
     const setCurrentUserHandler = () => {
-        dispatch(userAction.setCurrentContact(contact));
+        dispatch(userAction.setCurrentContact(props.contact));
     }
     return (
         <li className={classes.item} onClick={setCurrentUserHandler}>

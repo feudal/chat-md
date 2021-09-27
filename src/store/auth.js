@@ -70,7 +70,6 @@ export const createUserOnServer = (userInformation) => {
             body: JSON.stringify(userInformation),
         }
     ).then(response => {
-        console.log('response', response.ok, '...')
         if (!response.ok) {
             throw new Error('Create user on server failed!');
         } else {
@@ -78,7 +77,7 @@ export const createUserOnServer = (userInformation) => {
         }
 
     }).then(data => {
-        console.log('data', data)
+        // console.log('data', data)
     });
 }
 
