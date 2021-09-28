@@ -6,7 +6,7 @@ import CloseBtn from "../../UI/CloseBtn/CloseBtn";
 import {useDispatch, useSelector} from 'react-redux';
 import {uiActions} from "../../../store/ui";
 import classNames from "classnames/bind";
-import {removeFromFavorite} from "../../../store/user";
+import {addToFavorite, removeFromFavorite} from "../../../store/user";
 
 
 const ContactInfo = () => {
@@ -16,18 +16,12 @@ const ContactInfo = () => {
         dispatch(uiActions.closeContactInfo());
     }
     const currentUser = useSelector(state => state.user.currentContact);
-    const favList = useSelector(state => state.user.userFavoriteContactList);
-    let isFavoriteContact = false;
-    for (let i = 0; i < favList.length; i++) {
-        if (favList[i] === currentUser.email)
-            isFavoriteContact = true;
-    }
-    const toggleFavoriteHandler = (email) => {
 
-        if (isFavoriteContact) {
+    const toggleFavoriteHandler = (email) => {
+        if (currentUser.isFavorite) {
             dispatch(removeFromFavorite(email));
         } else {
-            //addToFavorite();
+            dispatch(addToFavorite(email));
         }
     }
 
@@ -44,12 +38,12 @@ const ContactInfo = () => {
                 name={currentUser.name || 'User name'}
                 email={currentUser.email}
             />
-            {currentUser.name && (
+
+            {(currentUser.isFavorite || currentUser.isContact) && (
                 <>
                     <ContactSetting
                         deactivateLink={true}
                         haveToggle={true}
-                        toggleStateIsTrue={isFavoriteContact}
                         onToggle={() => toggleFavoriteHandler(currentUser.email)}
                         title='Adăugare la favorite'
                     />
@@ -63,6 +57,12 @@ const ContactInfo = () => {
                         title='Blochează acest contact'
                     />
                 </>
+            )}
+            {(!currentUser.isFavorite && !currentUser.isContact) && (
+                <ContactSetting
+                    haveToggle={false}
+                    title='Adaugă contact'
+                />
             )}
         </div>
     );
