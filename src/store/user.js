@@ -46,6 +46,68 @@ export const removeFromFavorite = createAsyncThunk(
     }
 )
 
+export const addToFavorite = createAsyncThunk(
+    'user/addToFavorite',
+    async function (email, {dispatch, rejectWithValue}) {
+        try {
+            fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Server error');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data)
+                    let theKey;
+                    for (const key in data) {
+                        if (data[key].email === email) {
+                            theKey = key;
+                        }
+                    }
+                    if (theKey) { //if user exist
+                        return fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json',
+                            {
+                                method: 'PATCH',
+                                body: JSON.stringify({
+                                    [theKey]: {
+                                        email,
+                                        inContacts: false,
+                                        isBlocked: false,
+                                        isFavorite: true,
+                                    }
+                                })
+                            });
+                    } else {//if user not exist
+                        return fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json',
+                            {
+                                method: 'POST',
+                                body: JSON.stringify({
+                                    email,
+                                    inContacts: false,
+                                    isBlocked: false,
+                                    isFavorite: true,
+                                })
+                            });
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Server error 2');
+                    } else {
+                        dispatch(userAction.addToFavoriteList(email));
+                    }
+                    return response.json()
+                })
+
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+)
+
+// export const
+
 const initialState = {
     status: 'null',
     userInformation: {
@@ -58,6 +120,9 @@ const initialState = {
     currentContact: {
         name: null,
         email: null,
+        isFavorite: false,
+        isBlocked: false,
+        isContact: false,
     },
     allUserContactList: [],
     userContactList: [],
@@ -95,6 +160,7 @@ const userSlice = createSlice({
         },
         addToFavoriteList(state, action) {
             state.userFavoriteContactList.push(action.payload);
+            state.userContactList = state.userContactList.filter(item => item !== action.payload);
         },
         removeFromFavoriteList(state, action) {
             state.userFavoriteContactList = state.userFavoriteContactList.filter(item => item !== action.payload);
