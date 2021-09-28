@@ -1,6 +1,53 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+
+export const removeFromFavorite = createAsyncThunk(
+    'user/removeFromFavorite',
+    async function (email, {dispatch, rejectWithValue}) {
+        try {
+            fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Server error');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data)
+                    let theKey;
+                    for (const key in data) {
+                        if (data[key].email === email) {
+                            theKey = key;
+                        }
+                    }
+                    return fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json',
+                        {
+                            method: 'PATCH',
+                            body: JSON.stringify({
+                                [theKey]: {
+                                    email,
+                                    inContacts: true,
+                                    isBlocked: false,
+                                    isFavorite: false,
+                                }
+                            })
+                        });
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Server error 2');
+                    } else {
+                        dispatch(userAction.removeFromFavoriteList(email));
+                    }
+                    return response.json()
+                })
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+)
 
 const initialState = {
+    status: 'null',
     userInformation: {
         id: localStorage.id,
         email: null,
@@ -9,9 +56,8 @@ const initialState = {
         dob: null,
     },
     currentContact: {
-        name: 'User info',
+        name: null,
         email: null,
-        isFavorite: false,
     },
     allUserContactList: [],
     userContactList: [],
@@ -48,17 +94,23 @@ const userSlice = createSlice({
             }
         },
         addToFavoriteList(state, action) {
-            state.userFavoriteContactList = state.userFavoriteContactList.push(action.payload);
+            state.userFavoriteContactList.push(action.payload);
         },
         removeFromFavoriteList(state, action) {
-            // state.userFavoriteContactList = state.userFavoriteContactList.filter(item => item.id !== action.payload)
+            state.userFavoriteContactList = state.userFavoriteContactList.filter(item => item !== action.payload);
+            state.userContactList.push(action.payload);
         },
         addToBlockList(state, action) {
-            state.userBlockedContactList = state.userBlockedContactList.push(action.payload);
+            state.userBlockedContactList.push(action.payload);
         },
         removeFromBlockList(state, action) {
 
         },
+    },
+    extraReducers: {
+        [removeFromFavorite.rejected]: (state) => {
+            state.status = 'server error';
+        }
     }
 });
 

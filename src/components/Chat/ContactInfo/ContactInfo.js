@@ -6,6 +6,7 @@ import CloseBtn from "../../UI/CloseBtn/CloseBtn";
 import {useDispatch, useSelector} from 'react-redux';
 import {uiActions} from "../../../store/ui";
 import classNames from "classnames/bind";
+import {removeFromFavorite} from "../../../store/user";
 
 
 const ContactInfo = () => {
@@ -21,6 +22,14 @@ const ContactInfo = () => {
         if (favList[i] === currentUser.email)
             isFavoriteContact = true;
     }
+    const toggleFavoriteHandler = (email) => {
+
+        if (isFavoriteContact) {
+            dispatch(removeFromFavorite(email));
+        } else {
+            //addToFavorite();
+        }
+    }
 
     let classNameBound = classNames.bind(classes);
     const classForContactInfo = classNameBound(
@@ -32,21 +41,29 @@ const ContactInfo = () => {
         <div className={classForContactInfo}>
             <CloseBtn close={closeHandler}/>
             <Frame
-                name={currentUser.name}
+                name={currentUser.name || 'User name'}
                 email={currentUser.email}
             />
-            <ContactSetting
-                deactivateLink={true}
-                haveToggle={true}
-                toggleStateIsTrue={isFavoriteContact}
-                title='Adăugare la favorite'/>
-            <ContactSetting
-                haveToggle={false}
-                title='Șterge acest contact'/>
-            <ContactSetting
-                haveToggle={false}
-                color='danger'
-                title='Blochează acest contact'/>
+            {currentUser.name && (
+                <>
+                    <ContactSetting
+                        deactivateLink={true}
+                        haveToggle={true}
+                        toggleStateIsTrue={isFavoriteContact}
+                        onToggle={() => toggleFavoriteHandler(currentUser.email)}
+                        title='Adăugare la favorite'
+                    />
+                    <ContactSetting
+                        haveToggle={false}
+                        title='Șterge acest contact'
+                    />
+                    <ContactSetting
+                        haveToggle={false}
+                        color='danger'
+                        title='Blochează acest contact'
+                    />
+                </>
+            )}
         </div>
     );
 };
