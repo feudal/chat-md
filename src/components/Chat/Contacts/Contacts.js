@@ -37,7 +37,7 @@ const Contacts = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json')
+        fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/contacts-of-the-users/' + localStorage.id + '/contacts.json')
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -54,12 +54,12 @@ const Contacts = () => {
                 let favList = [];
                 let blockList = [];
 
-                arr.map(item=> {
-                    if(item.isFavorite === true) {
+                arr.forEach(item => {
+                    if (item.isFavorite === true) {
                         favList.push(item);
                         return;
                     }
-                    if(item.isBlocked === true) {
+                    if (item.isBlocked === true) {
                         blockList.push(item);
                         return;
                     }

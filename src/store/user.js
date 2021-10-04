@@ -1,10 +1,23 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
+const findKeyWithEmailFromData = (data, email) => {
+    for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+            if (data[key].email === email) {
+                return key;
+            }
+        }
+    }
+}
+
+const realtimeDatabaseUrl = 'https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/';
+const fetchUrl = realtimeDatabaseUrl + '/contacts-of-the-users/' + localStorage.id + '/contacts.json'
+
 export const removeFromFavorite = createAsyncThunk(
     'user/removeFromFavorite',
     async function (email, {dispatch, rejectWithValue}) {
         try {
-            fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json')
+            fetch(fetchUrl)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Server error');
@@ -12,14 +25,9 @@ export const removeFromFavorite = createAsyncThunk(
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data)
-                    let theKey;
-                    for (const key in data) {
-                        if (data[key].email === email) {
-                            theKey = key;
-                        }
-                    }
-                    return fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json',
+                    let theKey = findKeyWithEmailFromData(data, email);
+
+                    return fetch(fetchUrl,
                         {
                             method: 'PATCH',
                             body: JSON.stringify({
@@ -51,7 +59,7 @@ export const addToFavorite = createAsyncThunk(
     'user/addToFavorite',
     async function (email, {dispatch, rejectWithValue}) {
         try {
-            fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json')
+            fetch(fetchUrl)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Server error');
@@ -59,15 +67,9 @@ export const addToFavorite = createAsyncThunk(
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data)
-                    let theKey;
-                    for (const key in data) {
-                        if (data[key].email === email) {
-                            theKey = key;
-                        }
-                    }
+                    let theKey = findKeyWithEmailFromData(data, email);
                     if (theKey) { //if user exist
-                        return fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json',
+                        return fetch(fetchUrl,
                             {
                                 method: 'PATCH',
                                 body: JSON.stringify({
@@ -101,7 +103,7 @@ export const addToContact = createAsyncThunk(
     'user/addToContact',
     async function (email, {dispatch, rejectWithValue}) {
         try {
-            fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json',
+            fetch(fetchUrl,
                 {
                     method: 'POST',
                     body: JSON.stringify({
@@ -129,7 +131,7 @@ export const removeFromContact = createAsyncThunk(
     'user/removeFromContact',
     async function (email, {dispatch, rejectWithValue}) {
         try {
-            fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json')
+            fetch(fetchUrl)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Server error');
@@ -137,16 +139,10 @@ export const removeFromContact = createAsyncThunk(
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data)
-                    let theKey;
-                    for (const key in data) {
-                        if (data[key].email === email) {
-                            theKey = key;
-                        }
-                    }
-                    return fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json',
+                    let theKey = findKeyWithEmailFromData(data, email);
+                    return fetch(fetchUrl,
                         {
-                            method: 'PATCH',
+                            method: 'PATCH',//delete
                             body: JSON.stringify({
                                 [theKey]: {}
                             })
@@ -171,7 +167,7 @@ export const blockContact = createAsyncThunk(
     'user/blockContact',
     async function (email, {dispatch, rejectWithValue}) {
         try {
-            fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json')
+            fetch(fetchUrl)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Server error');
@@ -179,15 +175,9 @@ export const blockContact = createAsyncThunk(
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data)
-                    let theKey;
-                    for (const key in data) {
-                        if (data[key].email === email) {
-                            theKey = key;
-                        }
-                    }
+                    let theKey = findKeyWithEmailFromData(data, email);
                     if (theKey) { //if user exist
-                        return fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json',
+                        return fetch(fetchUrl,
                             {
                                 method: 'PATCH',
                                 body: JSON.stringify({
@@ -222,7 +212,7 @@ export const unblockContact = createAsyncThunk(
     'user/unblockContact',
     async function (email, {dispatch, rejectWithValue}) {
         try {
-            fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json')
+            fetch(fetchUrl)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Server error');
@@ -230,15 +220,9 @@ export const unblockContact = createAsyncThunk(
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data)
-                    let theKey;
-                    for (const key in data) {
-                        if (data[key].email === email) {
-                            theKey = key;
-                        }
-                    }
+                    let theKey = findKeyWithEmailFromData(data, email);
                     if (theKey) { //if user exist
-                        return fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json',
+                        return fetch(fetchUrl,
                             {
                                 method: 'PATCH',
                                 body: JSON.stringify({
