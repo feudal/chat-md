@@ -14,3 +14,11 @@
     color: #888A8F;
     margin: 10px 20px;
 }
+.empty {
+    margin: 10px 20px;
+    font-family: Sahitya, serif;
+    font-size: 18px;
+    line-height: 22px;
+
+    color: #5d61ed;
+}
