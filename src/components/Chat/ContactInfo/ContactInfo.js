@@ -6,7 +6,7 @@ import CloseBtn from "../../UI/CloseBtn/CloseBtn";
 import {useDispatch, useSelector} from 'react-redux';
 import {uiActions} from "../../../store/ui";
 import classNames from "classnames/bind";
-import {addToContact, addToFavorite, removeFromContact, removeFromFavorite} from "../../../store/user";
+import {addToContact, addToFavorite, blockContact,unblockContact, removeFromContact, removeFromFavorite} from "../../../store/user";
 
 
 const ContactInfo = () => {
@@ -37,6 +37,12 @@ const ContactInfo = () => {
     const removeFromContactHandler = (email) => {
         dispatch(removeFromContact(email));
     }
+    const blockContactHandler = (email) => {
+        dispatch(blockContact(email));
+    }
+    const unblockContactHandler = (email) => {
+        dispatch(unblockContact(email));
+    }
 
     return (
         <div className={classForContactInfo}>
@@ -62,18 +68,27 @@ const ContactInfo = () => {
                     />
                     <ContactSetting
                         haveToggle={false}
+                        contactChange={() => blockContactHandler(currentUser.email)}
                         color='danger'
                         title='Blochează acest contact'
                     />
                 </>
             )}
-            {(!currentUser.isFavorite && !currentUser.isContact) && (
+            {(!currentUser.isFavorite && !currentUser.isContact && !currentUser.isBlocked && currentUser.name) && (
                 <ContactSetting
                     haveToggle={false}
                     contactChange={() => addToContactHandler(currentUser.email)}
-                    title='Adaugă contact'
+                    title='Adaugă acest contact'
                 />
             )}
+            {(currentUser.isBlocked && (
+                <ContactSetting
+                    haveToggle={false}
+                    contactChange={() => unblockContactHandler(currentUser.email)}
+                    color='danger'
+                    title='Deblocheaza acest contact'
+                />
+            ))}
         </div>
     );
 };

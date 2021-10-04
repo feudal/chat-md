@@ -126,7 +126,7 @@ export const addToContact = createAsyncThunk(
     }
 )
 export const removeFromContact = createAsyncThunk(
-    'user/addToContact',
+    'user/removeFromContact',
     async function (email, {dispatch, rejectWithValue}) {
         try {
             fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json')
@@ -161,6 +161,106 @@ export const removeFromContact = createAsyncThunk(
                     }
                     return response.json()
                 })
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+)
+
+export const blockContact = createAsyncThunk(
+    'user/blockContact',
+    async function (email, {dispatch, rejectWithValue}) {
+        try {
+            fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Server error');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data)
+                    let theKey;
+                    for (const key in data) {
+                        if (data[key].email === email) {
+                            theKey = key;
+                        }
+                    }
+                    if (theKey) { //if user exist
+                        return fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json',
+                            {
+                                method: 'PATCH',
+                                body: JSON.stringify({
+                                    [theKey]: {
+                                        email,
+                                        inContacts: false,
+                                        isBlocked: true,
+                                        isFavorite: false,
+                                    }
+                                })
+                            });
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Server error 2');
+                    } else {
+                        dispatch(userAction.addToBlockList(email));
+                        dispatch(userAction.removeFromFavoriteList(email));
+                        dispatch(userAction.removeFromContactList(email));
+                    }
+                    return response.json()
+                })
+
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+)
+
+export const unblockContact = createAsyncThunk(
+    'user/unblockContact',
+    async function (email, {dispatch, rejectWithValue}) {
+        try {
+            fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Server error');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data)
+                    let theKey;
+                    for (const key in data) {
+                        if (data[key].email === email) {
+                            theKey = key;
+                        }
+                    }
+                    if (theKey) { //if user exist
+                        return fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json',
+                            {
+                                method: 'PATCH',
+                                body: JSON.stringify({
+                                    [theKey]: {
+                                        email,
+                                        inContacts: false,
+                                        isBlocked: false,
+                                        isFavorite: false,
+                                    }
+                                })
+                            });
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Server error 2');
+                    } else {
+                        dispatch(userAction.removeFromBlockList(email));
+                    }
+                    return response.json()
+                })
+
         } catch (error) {
             return rejectWithValue(error.message);
         }
@@ -231,8 +331,8 @@ const userSlice = createSlice({
             state.userContactList = state.userContactList.filter(item => item !== action.payload);
         },
         removeFromFavoriteList(state, action) {
-            state.userFavoriteContactList = state.userFavoriteContactList.filter(item => item !== action.payload);
             state.userContactList.push(action.payload);
+            state.userFavoriteContactList = state.userFavoriteContactList.filter(item => item !== action.payload);
         },
         addToContactList(state, action) {
             state.userContactList.push(action.payload);
@@ -243,20 +343,14 @@ const userSlice = createSlice({
             state.currentContact.isContact = false;
             state.currentContact.isFavorite = false;
         },
-        // updateUserInformation(state, action) {
-        //     state.userInformation = {
-        //         id: localStorage.id,
-        //         email: action.payload.email,
-        //         fullName: action.payload.fullName,
-        //         phone: action.payload.phone,
-        //         dob: action.payload.dob,
-        //     }
-        // },
-        // addToBlockList(state, action) {
-        //     state.userBlockedContactList.push(action.payload);
-        // },
-        // removeFromBlockList(state, action) {
-        // },
+        addToBlockList(state, action) {
+            state.userBlockedContactList.push(action.payload);
+            state.currentContact.isBlocked = true;
+        },
+        removeFromBlockList(state, action) {
+            state.userBlockedContactList = state.userBlockedContactList.filter(item => item !== action.payload);
+            state.currentContact.isBlocked = false;
+        },
     }
 });
 
