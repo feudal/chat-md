@@ -16,7 +16,7 @@ const ContactSetting = (props) => {
     return (
         <div className={classes.block}>
             <Link to='/chat' className={classForLink}>{props.title}</Link>
-            {props.haveToggle && <Toggle isToggled={props.toggleStateIsTrue || false}/>}
+            {props.haveToggle && <Toggle isToggled={props.toggleStateIsTrue || false} onToggle={props.onToggle}/>}
         </div>
     );
 };

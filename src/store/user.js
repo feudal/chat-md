@@ -159,10 +159,12 @@ const userSlice = createSlice({
             }
         },
         addToFavoriteList(state, action) {
+            state.currentContact.isFavorite = !state.currentContact.isFavorite;
             state.userFavoriteContactList.push(action.payload);
             state.userContactList = state.userContactList.filter(item => item !== action.payload);
         },
         removeFromFavoriteList(state, action) {
+            state.currentContact.isFavorite = !state.currentContact.isFavorite;
             state.userFavoriteContactList = state.userFavoriteContactList.filter(item => item !== action.payload);
             state.userContactList.push(action.payload);
         },
@@ -175,6 +177,9 @@ const userSlice = createSlice({
     },
     extraReducers: {
         [removeFromFavorite.rejected]: (state) => {
+            state.status = 'server error';
+        },
+        [addToFavorite.rejected]: (state) => {
             state.status = 'server error';
         }
     }

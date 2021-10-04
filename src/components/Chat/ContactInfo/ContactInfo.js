@@ -44,6 +44,7 @@ const ContactInfo = () => {
                     <ContactSetting
                         deactivateLink={true}
                         haveToggle={true}
+                        toggleStateIsTrue={currentUser.isFavorite}
                         onToggle={() => toggleFavoriteHandler(currentUser.email)}
                         title='Adăugare la favorite'
                     />
