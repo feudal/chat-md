@@ -78,17 +78,6 @@ export const addToFavorite = createAsyncThunk(
                                     }
                                 })
                             });
-                    } else {//if user not exist
-                        return fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json',
-                            {
-                                method: 'POST',
-                                body: JSON.stringify({
-                                    email,
-                                    inContacts: false,
-                                    isBlocked: false,
-                                    isFavorite: true,
-                                })
-                            });
                     }
                 })
                 .then(response => {
@@ -106,7 +95,6 @@ export const addToFavorite = createAsyncThunk(
     }
 )
 
-//??????
 export const addToContact = createAsyncThunk(
     'user/addToContact',
     async function (email, {dispatch, rejectWithValue}) {
@@ -161,6 +149,17 @@ const initialState = {
 const userSlice = createSlice({
     name: 'user',
     initialState,
+    extraReducers: {
+        [removeFromFavorite.rejected]: (state) => {
+            state.status = 'server error';
+        },
+        [addToFavorite.rejected]: (state) => {
+            state.status = 'server error';
+        },
+        [addToContact.rejected]: (state) => {
+            state.status = 'server error';
+        }
+    },
     reducers: {
         setUserContactList(state, action) {
             state.userContactList = action.payload;
@@ -179,11 +178,13 @@ const userSlice = createSlice({
         },
         addToFavoriteList(state, action) {
             state.currentContact.isFavorite = !state.currentContact.isFavorite;
+            state.currentContact.isContact = !state.currentContact.isContact;
             state.userFavoriteContactList.push(action.payload);
             state.userContactList = state.userContactList.filter(item => item !== action.payload);
         },
         removeFromFavoriteList(state, action) {
             state.currentContact.isFavorite = !state.currentContact.isFavorite;
+            state.currentContact.isContact = !state.currentContact.isContact;
             state.userFavoriteContactList = state.userFavoriteContactList.filter(item => item !== action.payload);
             state.userContactList.push(action.payload);
         },
@@ -205,17 +206,6 @@ const userSlice = createSlice({
         // },
         // removeFromBlockList(state, action) {
         // },
-    },
-    extraReducers: {
-        [removeFromFavorite.rejected]: (state) => {
-            state.status = 'server error';
-        },
-        [addToFavorite.rejected]: (state) => {
-            state.status = 'server error';
-        },
-        [addToContact.rejected]: (state) => {
-            state.status = 'server error';
-        }
     }
 });
 
