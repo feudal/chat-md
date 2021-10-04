@@ -37,6 +37,7 @@ export const removeFromFavorite = createAsyncThunk(
                         throw new Error('Server error 2');
                     } else {
                         dispatch(userAction.removeFromFavoriteList(email));
+                        dispatch(userAction.toggleFavoriteStateCurrentContact());
                     }
                     return response.json()
                 })
@@ -85,6 +86,7 @@ export const addToFavorite = createAsyncThunk(
                         throw new Error('Server error 2');
                     } else {
                         dispatch(userAction.addToFavoriteList(email));
+                        dispatch(userAction.toggleFavoriteStateCurrentContact());
                     }
                     return response.json()
                 })
@@ -176,15 +178,15 @@ const userSlice = createSlice({
         setCurrentContact(state, action) {
             state.currentContact = action.payload;
         },
-        addToFavoriteList(state, action) {
+        toggleFavoriteStateCurrentContact(state) {
             state.currentContact.isFavorite = !state.currentContact.isFavorite;
             state.currentContact.isContact = !state.currentContact.isContact;
+        },
+        addToFavoriteList(state, action) {
             state.userFavoriteContactList.push(action.payload);
             state.userContactList = state.userContactList.filter(item => item !== action.payload);
         },
         removeFromFavoriteList(state, action) {
-            state.currentContact.isFavorite = !state.currentContact.isFavorite;
-            state.currentContact.isContact = !state.currentContact.isContact;
             state.userFavoriteContactList = state.userFavoriteContactList.filter(item => item !== action.payload);
             state.userContactList.push(action.payload);
         },
