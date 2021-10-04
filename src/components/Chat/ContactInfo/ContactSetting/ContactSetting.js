@@ -1,21 +1,20 @@
 import React from 'react';
 import classes from './ContactSetting.module.css';
 import Toggle from "../../../UI/Toggle/Toggle";
-import {Link} from "react-router-dom";
 import classNames from "classnames/bind";
 
 
 const ContactSetting = (props) => {
     let classNameBound = classNames.bind(classes);
 
-    const classForLink = classNameBound(
-        classes.link,
+    const classForButton = classNameBound(
+        classes.button,
         {danger : (props.color === 'danger')},
-        {'link--non-active' : props.deactivateLink});
+        {'button--non-active' : props.deactivateLink});
 
     return (
         <div className={classes.block}>
-            <Link to='/chat' className={classForLink}>{props.title}</Link>
+            <button className={classForButton} onClick={props.contactChange}>{props.title}</button>
             {props.haveToggle && <Toggle isToggled={props.toggleStateIsTrue || false} onToggle={props.onToggle}/>}
         </div>
     );

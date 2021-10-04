@@ -7,7 +7,10 @@
     align-items: center;
 }
 
-.link {
+.button {
+    background: transparent;
+    cursor: pointer;
+
     font-family: Sahitya, serif;
     font-size: 18px;
     font-style: normal;
@@ -17,12 +20,12 @@
 
     color: #fff;
 }
-.link:hover {
+.button:hover {
     text-decoration: underline;
 }
-.danger {
+.button.danger {
     color: #EF5E5E;
 }
-.link--non-active {
+.button--non-active {
     pointer-events: none;
 }
