@@ -6,7 +6,7 @@ import CloseBtn from "../../UI/CloseBtn/CloseBtn";
 import {useDispatch, useSelector} from 'react-redux';
 import {uiActions} from "../../../store/ui";
 import classNames from "classnames/bind";
-import {addToContact, addToFavorite, removeFromFavorite} from "../../../store/user";
+import {addToContact, addToFavorite, removeFromContact, removeFromFavorite} from "../../../store/user";
 
 
 const ContactInfo = () => {
@@ -34,6 +34,9 @@ const ContactInfo = () => {
     const addToContactHandler = (email) => {
         dispatch(addToContact(email));
     }
+    const removeFromContactHandler = (email) => {
+        dispatch(removeFromContact(email));
+    }
 
     return (
         <div className={classForContactInfo}>
@@ -54,6 +57,7 @@ const ContactInfo = () => {
                     />
                     <ContactSetting
                         haveToggle={false}
+                        contactChange={() => removeFromContactHandler(currentUser.email)}
                         title='Șterge acest contact'
                     />
                     <ContactSetting
