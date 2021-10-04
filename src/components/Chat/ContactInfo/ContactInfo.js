@@ -6,7 +6,7 @@ import CloseBtn from "../../UI/CloseBtn/CloseBtn";
 import {useDispatch, useSelector} from 'react-redux';
 import {uiActions} from "../../../store/ui";
 import classNames from "classnames/bind";
-import {addToFavorite, removeFromFavorite} from "../../../store/user";
+import {addToContact, addToFavorite, removeFromFavorite} from "../../../store/user";
 
 
 const ContactInfo = () => {
@@ -30,6 +30,10 @@ const ContactInfo = () => {
         classes['contact-info'],
         {'contact-info--opened': showContactInfo},
         {'contact-info--closed': !showContactInfo});
+
+    const addToContactHandler = (email) => {
+        dispatch(addToContact(email));
+    }
 
     return (
         <div className={classForContactInfo}>
@@ -62,6 +66,7 @@ const ContactInfo = () => {
             {(!currentUser.isFavorite && !currentUser.isContact) && (
                 <ContactSetting
                     haveToggle={false}
+                    contactChange={() => addToContactHandler(currentUser.email)}
                     title='Adaugă contact'
                 />
             )}

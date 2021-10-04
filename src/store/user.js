@@ -106,7 +106,35 @@ export const addToFavorite = createAsyncThunk(
     }
 )
 
-// export const
+//??????
+export const addToContact = createAsyncThunk(
+    'user/addToContact',
+    async function (email, {dispatch, rejectWithValue}) {
+        try {
+            fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + localStorage.id + '/contacts.json',
+                {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        email,
+                        inContacts: true,
+                        isBlocked: false,
+                        isFavorite: false,
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Server error');
+                    } else {
+                        dispatch(userAction.addToContactList(email));
+                    }
+                    return response.json();
+                })
+                .then(data => console.log(data))
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+)
 
 const initialState = {
     status: 'null',
@@ -134,12 +162,6 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setCurrentContact(state, action) {
-            state.currentContact = action.payload;
-        },
-        setAllUserContactList(state, action) {
-            state.allUserContactList = action.payload;
-        },
         setUserContactList(state, action) {
             state.userContactList = action.payload;
         },
@@ -149,14 +171,11 @@ const userSlice = createSlice({
         setBlockedContactList(state, action) {
             state.userBlockedContactList = action.payload;
         },
-        updateUserInformation(state, action) {
-            state.userInformation = {
-                id: localStorage.id,
-                email: action.payload.email,
-                fullName: action.payload.fullName,
-                phone: action.payload.phone,
-                dob: action.payload.dob,
-            }
+        setAllUserContactList(state, action) {
+            state.allUserContactList = action.payload;
+        },
+        setCurrentContact(state, action) {
+            state.currentContact = action.payload;
         },
         addToFavoriteList(state, action) {
             state.currentContact.isFavorite = !state.currentContact.isFavorite;
@@ -168,18 +187,33 @@ const userSlice = createSlice({
             state.userFavoriteContactList = state.userFavoriteContactList.filter(item => item !== action.payload);
             state.userContactList.push(action.payload);
         },
-        addToBlockList(state, action) {
-            state.userBlockedContactList.push(action.payload);
+        addToContactList(state, action) {
+            state.userContactList.push(action.payload);
+            state.currentContact.isContact = true;
         },
-        removeFromBlockList(state, action) {
-
-        },
+        // updateUserInformation(state, action) {
+        //     state.userInformation = {
+        //         id: localStorage.id,
+        //         email: action.payload.email,
+        //         fullName: action.payload.fullName,
+        //         phone: action.payload.phone,
+        //         dob: action.payload.dob,
+        //     }
+        // },
+        // addToBlockList(state, action) {
+        //     state.userBlockedContactList.push(action.payload);
+        // },
+        // removeFromBlockList(state, action) {
+        // },
     },
     extraReducers: {
         [removeFromFavorite.rejected]: (state) => {
             state.status = 'server error';
         },
         [addToFavorite.rejected]: (state) => {
+            state.status = 'server error';
+        },
+        [addToContact.rejected]: (state) => {
             state.status = 'server error';
         }
     }
