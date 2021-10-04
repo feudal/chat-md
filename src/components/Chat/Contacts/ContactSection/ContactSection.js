@@ -1,6 +1,7 @@
 import React from 'react';
 import ContactsList from "./ContactsList/ContactsList";
 import classes from './ContactSection.module.css';
+import {useSelector} from "react-redux";
 
 const elementIsInArray = (el, arr) => {
     for (let i = 0; i < arr.length; i++) {
@@ -12,12 +13,15 @@ const elementIsInArray = (el, arr) => {
 }
 
 const ContactSection = (props) => {
-    const favoriteList = props.list.filter((item) => elementIsInArray(item.email, props.favorite));
-    const contactList = props.list.filter((item) => elementIsInArray(item.email, props.contacts));
-    const blockedList = props.list.filter((item) => elementIsInArray(item.email, props.blocked));
+    const searchByInput = useSelector(state => state.ui.searchByInput);
+    const list = props.list.filter((item) => item.name.toLowerCase().indexOf(searchByInput) > -1);
+
+    const favoriteList = list.filter((item) => elementIsInArray(item.email, props.favorite));
+    const contactList = list.filter((item) => elementIsInArray(item.email, props.contacts));
+    const blockedList = list.filter((item) => elementIsInArray(item.email, props.blocked));
 
     const elementsThatIsNotInAllList = [...props.favorite, ...props.contacts, ...props.blocked, localStorage.email]; //localStorage.email is active user
-    let otherUsersList = props.list.filter((item) => !elementIsInArray(item.email, elementsThatIsNotInAllList));
+    let otherUsersList = list.filter((item) => !elementIsInArray(item.email, elementsThatIsNotInAllList));
 
     return (
         <section className={classes.section}>

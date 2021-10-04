@@ -14,22 +14,38 @@
     color: #888A8F;
     margin-left: 20px;
 }
-.input {
-    border-radius: 3px;
+.group {
+    position: relative;
     width: calc(100% - 40px);
     margin: 20px 20px 0;
-    padding: 6px 15px 6px 30px;
-
+}
+.input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.25);
     color: #fff;
     font-family: Sahitya, serif;
     font-style: normal;
     font-weight: normal;
     font-size: 20px;
     line-height: 26px;
+    padding: 5px 30px 5px 5px;
     outline: none;
+    border-radius: 3px;
     border: 1px solid transparent;
+}
+.input:focus{
+    outline: none;
+    border-radius: 3px;
+}
+.search {
+    cursor: pointer;
+    width: 30px;
+    height: 100%;
+    background: url('../../../../assets/icons/search.svg') no-repeat center center;
 
-    background: rgba(0, 0, 0, 0.25) url('../../../../assets/icons/search.svg') no-repeat 5px center;
+    position: absolute;
+    right:  0;
+    top: 0;
 }
 
 .input:focus {

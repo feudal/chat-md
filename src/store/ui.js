@@ -6,7 +6,8 @@ const initialState = {
         show: false,
         type: null,
         message: null
-    }
+    },
+    searchByInput: '',
 }
 
 const uiSlice = createSlice({
@@ -29,6 +30,9 @@ const uiSlice = createSlice({
             state.messageNotification.show = true;
             state.messageNotification.type = action.payload.type;
             state.messageNotification.message = action.payload.message;
+        },
+        setSearchByInput(state,action) {
+            state.searchByInput = action.payload.toLowerCase().trim();
         }
     }
 });
