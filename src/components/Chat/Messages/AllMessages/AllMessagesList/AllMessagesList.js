@@ -12,10 +12,10 @@ const AllMessagesList = () => {
         const hour = time.getHours();
         const min = time.getMinutes();
 
-        if(item.name === 'Tu'){
+        if(item.name === localStorage.email){
             return (
                 <MyMessage
-                    key={hour+min}
+                    key={item.date}
                     name={item.name}
                     text={item.message}
                     hour={hour}

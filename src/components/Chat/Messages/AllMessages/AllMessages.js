@@ -12,24 +12,43 @@ const formatEmail = (email) => {
     }
 }
 
-const findKeyFromData = (data, email) => {
-    for (const key in data) {
-        if (data.hasOwnProperty(key)) {
-            if (data[key][email]) {
-                return key;
+// const findKeyFromData = (data, email) => {
+//     for (const key in data) {
+//         if (data.hasOwnProperty(key)) {
+//             if (data[key][email]) {
+//                 return key;
+//             }
+//         }
+//     }
+// }
+
+const findCurrentMessages = (obj, email) => {
+    let newObj = [];
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            if (key.includes(email) && key.includes(formatEmail(localStorage.email))) {
+                newObj = obj[key];
             }
         }
     }
+    let newArr = [];
+    for(const key in newObj) {
+        if(newObj.hasOwnProperty(key)) {
+            newArr.push(newObj[key]);
+        }
+    }
+    return newArr;
 }
+
 
 const AllMessages = () => {
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.user.currentContact);
-    const emailFormatted = formatEmail(currentUser.email);
+    const emailOfContactFormatted = formatEmail(currentUser.email);
 
     useEffect(() => {
-        if (emailFormatted) {
-            fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/all-messages/' + localStorage.id + '.json')
+        if (emailOfContactFormatted) {
+            fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/all-messages.json')
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -38,23 +57,19 @@ const AllMessages = () => {
                     }
                 })
                 .then(data => {
-                    console.log(data)
-                    const theKey = findKeyFromData(data, emailFormatted);
-                    let messagesFromThisEmail = null;
-                    if (data.hasOwnProperty(theKey)) {
-                        messagesFromThisEmail = data[theKey][emailFormatted];
-                    }
-                    let arr = [];
-                    for(const key in messagesFromThisEmail) {
-                        if(messagesFromThisEmail && messagesFromThisEmail.hasOwnProperty(key)){
-                            arr.push(messagesFromThisEmail[key]);
+                    console.log(data);
+                    let allMessages = [];
+                    for (const key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            allMessages = (data[key]);
                         }
                     }
-                    console.log(arr);
-                    dispatch(messageActions.initiateCurrentMessages(arr));
+
+                    const currentMessages = findCurrentMessages(allMessages, emailOfContactFormatted);
+                    dispatch(messageActions.initiateCurrentMessages(currentMessages));
                 })
         }
-    }, [dispatch, emailFormatted])
+    }, [dispatch, emailOfContactFormatted])
 
     return (
         <div className={classes.block}>
