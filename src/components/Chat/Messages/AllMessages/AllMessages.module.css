@@ -1,4 +1,5 @@
 .block {
+    position: relative;
     overflow-y: scroll;
     flex-grow: 1;
 
