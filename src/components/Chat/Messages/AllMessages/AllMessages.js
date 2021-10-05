@@ -1,49 +1,64 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import classes from './AllMessages.module.css';
 import AllMessagesList from "./AllMessagesList/AllMessagesList";
+import {useDispatch, useSelector} from "react-redux";
+import {messageActions} from "../../../../store/messages";
 
-const ALL_MESSAGE = [
-    {
-        name: 'Tu',
-        message: 'Salut Maria! ce mai faci?',
-        date: '2021-09-10T13:56:50'
-    },
-    {
-        name: 'Maria Botgros',
-        message: 'Bine! Mariana, nu te-am mai vazut de mult. Eram prieteni buni, si inca suntem.',
-        date: '2021-09-10T13:55:50'
-    },
-    {
-        name: 'Tu',
-        message: 'Da! stiu lucrul acesta ma intristat mult, nu situ ce ia determiant pe parintii mei sa ne mutam. Dar e bine si aici.',
-        date: '2021-09-10T13:54:50'
-    },
-    {
-        name: 'Maria Botgros',
-        message: 'Daca iti este bine , ma faci fericit. Auzi? Cand mai vi si tu pe aici? M-am plictisit fara tine.',
-        date: '2021-09-10T13:53:50'
-    },
-    {
-        name: 'Tu',
-        message: 'Am sa vin in vacanta de vara.',
-        date: '2021-09-10T13:52:50'
-    },
-    {
-        name: 'Maria Botgros',
-        message: 'Bine, eu trebuie sa plec, pa!',
-        date: '2021-09-10T13:51:50'
-    },
-    {
-        name: 'Tu',
-        message: 'Pa, Vorbim deseara.',
-        date: '2021-09-10T13:50:50'
-    },
-]
+const formatEmail = (email) => {
+    if (email) {
+        email = email.replace(/\./g, '-')
+        email = email.replace('@', '-aron-')
+        return email;
+    }
+}
+
+const findKeyFromData = (data, email) => {
+    for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+            if (data[key][email]) {
+                return key;
+            }
+        }
+    }
+}
 
 const AllMessages = () => {
+    const dispatch = useDispatch();
+    const currentUser = useSelector(state => state.user.currentContact);
+    const emailFormatted = formatEmail(currentUser.email);
+
+    useEffect(() => {
+        if (emailFormatted) {
+            fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/all-messages/' + localStorage.id + '.json')
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        console.log('error')
+                    }
+                })
+                .then(data => {
+                    console.log(data)
+                    const theKey = findKeyFromData(data, emailFormatted);
+                    let messagesFromThisEmail = null;
+                    if (data.hasOwnProperty(theKey)) {
+                        messagesFromThisEmail = data[theKey][emailFormatted];
+                    }
+                    let arr = [];
+                    for(const key in messagesFromThisEmail) {
+                        if(messagesFromThisEmail && messagesFromThisEmail.hasOwnProperty(key)){
+                            arr.push(messagesFromThisEmail[key]);
+                        }
+                    }
+                    console.log(arr);
+                    dispatch(messageActions.initiateCurrentMessages(arr));
+                })
+        }
+    }, [dispatch, emailFormatted])
+
     return (
         <div className={classes.block}>
-            <AllMessagesList list={ALL_MESSAGE}/>
+            <AllMessagesList/>
         </div>
     );
 };
