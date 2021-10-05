@@ -255,8 +255,8 @@ const initialState = {
     status: 'null',
     userInformation: {
         id: localStorage.id,
-        email: null,
-        fullName: null,
+        email: localStorage.email,
+        name: localStorage.email,
         phone: null,
         dob: null,
     },
