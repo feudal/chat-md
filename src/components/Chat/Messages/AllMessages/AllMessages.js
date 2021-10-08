@@ -12,22 +12,14 @@ const formatEmail = (email) => {
     }
 }
 
-// const findKeyFromData = (data, email) => {
-//     for (const key in data) {
-//         if (data.hasOwnProperty(key)) {
-//             if (data[key][email]) {
-//                 return key;
-//             }
-//         }
-//     }
-// }
-
 const findCurrentMessages = (obj, email) => {
     let newObj = [];
-    for (const key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            if (key.includes(email) && key.includes(formatEmail(localStorage.email))) {
-                newObj = obj[key];
+    for (let i = 0; i < obj.length; i++) {
+        for (const key in obj[i]) {
+            if (obj[i].hasOwnProperty(key)) {
+                if (key.includes(email) && key.includes(formatEmail(localStorage.email))) {
+                    newObj = obj[i][key];
+                }
             }
         }
     }
@@ -58,14 +50,14 @@ const AllMessages = () => {
                 })
                 .then(data => {
                     console.log(data);
-                    let allMessages = [];
+                    let allUsersMessages = [];
                     for (const key in data) {
                         if (data.hasOwnProperty(key)) {
-                            allMessages = (data[key]);
+                            allUsersMessages.push(data[key]);
                         }
                     }
 
-                    const currentMessages = findCurrentMessages(allMessages, emailOfContactFormatted);
+                    const currentMessages = findCurrentMessages(allUsersMessages, emailOfContactFormatted);
                     dispatch(messageActions.initiateCurrentMessages(currentMessages));
                 })
         }

@@ -10,6 +10,23 @@ const findKeyWithEmailFromData = (data, email) => {
     }
 }
 
+const formatEmail = (email) => {
+    if (email) {
+        email = email.replace(/\./g, '-')
+        email = email.replace('@', '-aron-')
+        return email;
+    }
+}
+const findSecondFragment = (data, email) => {
+    let secondFragmentUrl;
+    for (const key in data) for (const key2 in data[key]) {
+        if (key2.includes(formatEmail(email)) && key2.includes(formatEmail(localStorage.email))) {
+            secondFragmentUrl = '/' + key + '/' + key2 + '.json';
+        }
+    }
+    return secondFragmentUrl;
+}
+
 const realtimeDatabaseUrl = 'https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/';
 const fetchUrl = realtimeDatabaseUrl + '/contacts-of-the-users/' + localStorage.id + '/contacts.json'
 
@@ -127,6 +144,45 @@ export const addToContact = createAsyncThunk(
         }
     }
 )
+
+export const initiateMessaging = createAsyncThunk(
+    'user/initiateMessaging',
+    async function (email, { rejectWithValue}) {
+        try {
+            fetch(realtimeDatabaseUrl + '/all-messages.json')
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Server error');
+                    }
+                })
+                .then(data => {
+                    console.log(data);
+                    const secondFragmentUrl = findSecondFragment(data, email);
+
+                    if (!secondFragmentUrl) {//dont create a new array of message
+                        return fetch(realtimeDatabaseUrl + '/all-messages.json', {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                [formatEmail(email) + '-and-' + formatEmail(localStorage.email)]: {
+                                    '-someKey': {
+                                        date: new Date(),
+                                        message: 'Ati inceput sa comunicati cu un contact nou',
+                                        name: 'System',
+                                    }
+                                }
+                            })
+                        })
+                    }
+                })
+
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+)
+
 export const removeFromContact = createAsyncThunk(
     'user/removeFromContact',
     async function (email, {dispatch, rejectWithValue}) {

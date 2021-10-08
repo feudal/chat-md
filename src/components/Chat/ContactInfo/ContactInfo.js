@@ -6,7 +6,15 @@ import CloseBtn from "../../UI/CloseBtn/CloseBtn";
 import {useDispatch, useSelector} from 'react-redux';
 import {uiActions} from "../../../store/ui";
 import classNames from "classnames/bind";
-import {addToContact, addToFavorite, blockContact,unblockContact, removeFromContact, removeFromFavorite} from "../../../store/user";
+import {
+    addToContact,
+    addToFavorite,
+    blockContact,
+    initiateMessaging,
+    removeFromContact,
+    removeFromFavorite,
+    unblockContact
+} from "../../../store/user";
 
 
 const ContactInfo = () => {
@@ -33,6 +41,8 @@ const ContactInfo = () => {
 
     const addToContactHandler = (email) => {
         dispatch(addToContact(email));
+        dispatch(initiateMessaging(email));
+
     }
     const removeFromContactHandler = (email) => {
         dispatch(removeFromContact(email));

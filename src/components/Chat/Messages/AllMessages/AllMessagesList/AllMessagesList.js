@@ -6,6 +6,7 @@ import classes from './AllMessagesList.module.css';
 
 const AllMessagesList = () => {
     const currentMessages = useSelector(state => state.message.currentMessages);
+    const currentContact = useSelector(state => state.user.currentContact);
 
     const listOfMessage = currentMessages.map((item) => {
         let time = new Date( Date.parse(item.date) );
@@ -25,6 +26,7 @@ const AllMessagesList = () => {
         } else {
             return (
                 <YourMessage
+                    key={item.date}
                     name={item.name}
                     text={item.message}
                     hour={hour}
@@ -35,8 +37,13 @@ const AllMessagesList = () => {
     });
     return (
         <ul>
-            {listOfMessage.length === 0 && <p className={classes.info}>Încă nu ați comunicat cu acest contact</p>}
-            {listOfMessage}
+            {(!currentContact.isContact && !currentContact.isFavorite) && <p className={classes.info}>Nu puteti comunica cu acest contact , (nu este prezent in lista de contacte)</p>}
+            {(currentContact.isContact || currentContact.isFavorite) && (
+                <>
+                    {listOfMessage.length === 0 &&  <p className={classes.info}>Încă nu ați comunicat cu acest contact</p>}
+                    {listOfMessage}
+                </>
+            )}
         </ul>
     );
 };
