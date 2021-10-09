@@ -307,6 +307,28 @@ export const unblockContact = createAsyncThunk(
     }
 )
 
+export const updateUserInfoOnServer = createAsyncThunk(
+    'user/updateUserOnServer',
+    async function (userInfo, {dispatch, rejectWithValue}) {
+        try {
+            fetch(realtimeDatabaseUrl + 'personal-data/' + localStorage.id + '/.json',
+                {
+                    method: 'PATCH',
+                    body: JSON.stringify(userInfo)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Server error');
+                    } else {
+                        dispatch(userAction.updateUserInfo(userInfo))
+                    }
+                })
+        } catch (error) {
+            return rejectWithValue
+        }
+    }
+)
+
 const initialState = {
     status: 'null',
     userInformation: {
@@ -315,6 +337,7 @@ const initialState = {
         name: localStorage.email,
         phone: null,
         dob: null,
+        personalInfo: null,
     },
     currentContact: {
         name: null,
@@ -390,6 +413,12 @@ const userSlice = createSlice({
         removeFromBlockList(state, action) {
             state.userBlockedContactList = state.userBlockedContactList.filter(item => item !== action.payload);
             state.currentContact.isBlocked = false;
+        },
+        updateUserInfo(state, action) {
+            state.userInformation.name = action.payload.name;
+            state.userInformation.phone = action.payload.phone;
+            state.userInformation.dob = action.payload.dob;
+            state.userInformation.personalInfo = action.payload.personalInfo;
         },
     }
 });
