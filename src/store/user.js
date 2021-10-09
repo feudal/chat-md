@@ -348,6 +348,7 @@ const initialState = {
         phone: null,
         dob: null,
         personalInfo: null,
+        imgUrl: null,
     },
     currentContact: {
         name: null,
@@ -439,6 +440,7 @@ const userSlice = createSlice({
             state.userInformation.dob = action.payload.dob;
             state.userInformation.personalInfo = action.payload.personalInfo;
         },
+
     }
 });
 

@@ -6,7 +6,7 @@ import ProfileForm from "../components/Profile/ProfileForm/ProfileForm";
 const EditProfile = () => {
     return (
         <ProfileLayout>
-            <ProfileImage/>
+            <ProfileImage upload={true}/>
             <ProfileForm/>
         </ProfileLayout>
     );
