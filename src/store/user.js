@@ -17,6 +17,7 @@ const formatEmail = (email) => {
         return email;
     }
 }
+
 const findSecondFragment = (data, email) => {
     let secondFragmentUrl;
     for (const key in data) for (const key2 in data[key]) {
@@ -311,20 +312,29 @@ export const updateUserInfoOnServer = createAsyncThunk(
     'user/updateUserOnServer',
     async function (userInfo, {dispatch, rejectWithValue}) {
         try {
-            fetch(realtimeDatabaseUrl + 'personal-data/' + localStorage.id + '/.json',
-                {
-                    method: 'PATCH',
-                    body: JSON.stringify(userInfo)
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Server error');
-                    } else {
-                        dispatch(userAction.updateUserInfo(userInfo))
+            fetch(realtimeDatabaseUrl + 'users-info/' + localStorage.id + '.json', {
+                method: 'PATCH',
+                body: JSON.stringify({
+                        dob: userInfo.dob,
+                        name: userInfo.name,
+                        phone: userInfo.phone,
+                        personalInfo: userInfo.personalInfo,
                     }
-                })
+                )
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Server error');
+                } else {
+                    dispatch(userAction.updateUserInfo({
+                        dob: userInfo.dob,
+                        name: userInfo.name,
+                        phone: userInfo.phone,
+                        personalInfo: userInfo.personalInfo,
+                    }))
+                }
+            })
         } catch (error) {
-            return rejectWithValue
+            return rejectWithValue;
         }
     }
 )
@@ -366,6 +376,15 @@ const userSlice = createSlice({
             state.status = 'server error';
         },
         [removeFromContact.rejected]: (state) => {
+            state.status = 'server error';
+        },
+        [blockContact.rejected]: (state) => {
+            state.status = 'server error';
+        },
+        [unblockContact.rejected]: (state) => {
+            state.status = 'server error';
+        },
+        [updateUserInfoOnServer.rejected]: (state) => {
             state.status = 'server error';
         }
     },

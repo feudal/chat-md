@@ -5,12 +5,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {userAction} from "../../../store/user";
 
 
+const realtimeDatabaseUrl = 'https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/';
+
 const ProfileInfo = () => {
     const userInfo = useSelector(state => state.user.userInformation);
     const dispatch = useDispatch();
     
     useEffect(()=> {
-        fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + 'personal-data/' + localStorage.id + '/.json')
+        fetch(realtimeDatabaseUrl + 'users-info/' + localStorage.id + '.json')
             .then(res => {
                 if (!res.ok){
                     throw new Error('Server error');

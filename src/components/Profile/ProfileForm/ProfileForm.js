@@ -2,10 +2,12 @@ import React, {useRef} from 'react';
 import classes from './ProfileForm.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {updateUserInfoOnServer} from '../../../store/user';
+import {useHistory} from 'react-router-dom';
 
 const ProfileForm = () => {
     const userInfo = useSelector(state => state.user.userInformation);
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const userName = useRef();
     const userPhone = useRef();
@@ -15,11 +17,13 @@ const ProfileForm = () => {
     const onSubmitHandler = (event) => {
         event.preventDefault();
         dispatch(updateUserInfoOnServer({
+            email: userName.current.value,
             name: userName.current.value,
             phone: userPhone.current.value,
             dob: userDob.current.value,
             personalInfo: userText.current.value,
         }))
+        history.push('/profile');
     }
 
     return (
