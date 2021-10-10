@@ -14,9 +14,7 @@ export const sendMessageAsync = createAsyncThunk(
                     }
                 })
                 .then(data => {
-                    console.log(data);
                     const secondFragmentUrl = findSecondFragment(data, email);
-                    console.log(secondFragmentUrl)
 
                     if (secondFragmentUrl) { //if messages exist
                         return fetch(realtimeDatabaseUrl + 'all-messages/' + secondFragmentUrl, {

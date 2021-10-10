@@ -3,6 +3,7 @@ import {NavLink} from "react-router-dom";
 import classes from './ContactItem.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {userAction} from "../../../../../../store/user";
+import UserIcon from "../../../../../User/UserIcon";
 
 const ContactItem = (props) => {
     const dispatch = useDispatch();
@@ -30,7 +31,10 @@ const ContactItem = (props) => {
     return (
         <li className={classes.item} onClick={setCurrentUserHandler}>
             <NavLink to={`/chat/${props.contact.name}`} className={classes.link} activeClassName={classes.active}>
-                <div className={classes.logo}/>
+                <div className={classes.logo}>
+                    { contact.imgUrl && <UserIcon url={contact.imgUrl}/>}
+                    {!contact.imgUrl && <div className={classes['big-letter']}>{contact.name[0]}</div>}
+                </div>
                 <span className={classes.name}>{props.contact.name}</span>
             </NavLink>
         </li>

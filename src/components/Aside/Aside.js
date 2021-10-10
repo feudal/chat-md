@@ -75,7 +75,7 @@ const Aside = () => {
                             className={classes['profile-link']}
                             activeClassName={classes.active}
                             to='/profile'>
-                            <UserIcon url={userImgUrl}/>
+                            <UserIcon url={userImgUrl} />
                         </NavLink>
                         <button
                             onClick={logOutHandler}

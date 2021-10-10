@@ -58,6 +58,7 @@ const ContactInfo = () => {
         <div className={classForContactInfo}>
             <CloseBtn close={closeHandler}/>
             <Frame
+                imgUrl={currentUser.imgUrl}
                 name={currentUser.name || 'User name'}
                 email={currentUser.email}
             />

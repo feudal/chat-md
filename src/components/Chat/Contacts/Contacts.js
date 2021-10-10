@@ -30,7 +30,8 @@ const Contacts = () => {
                     arr.push({
                         id: key,
                         name: data[key].name,
-                        email: data[key].email
+                        email: data[key].email,
+                        imgUrl: data[key].imgUrl,
                     })
                 }
                 dispatch(userAction.setAllUserContactList(arr));

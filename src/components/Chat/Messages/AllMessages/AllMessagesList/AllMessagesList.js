@@ -12,12 +12,14 @@ const AllMessagesList = () => {
         let time = new Date( Date.parse(item.date) );
         const hour = time.getHours();
         const min = time.getMinutes();
+        console.log('item', item)
 
         if(item.name === localStorage.email){
             return (
                 <MyMessage
                     key={item.date}
                     name={item.name}
+                    // url={item.}
                     text={item.message}
                     hour={hour}
                     min={min}
