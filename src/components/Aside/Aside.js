@@ -29,7 +29,9 @@ const Aside = () => {
                 return response.json();
             })
             .then(data => {
-                dispatch(userAction.setImgUrl(data.imgUrl));
+                if(data){
+                    dispatch(userAction.setImgUrl(data.imgUrl));
+                }
             });
     }, [dispatch, userImgUrl]);
 

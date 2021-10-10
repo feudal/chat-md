@@ -3,9 +3,7 @@ import classes from './ProfileInfo.module.css';
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {userAction} from "../../../store/user";
-
-
-const realtimeDatabaseUrl = 'https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/';
+import {realtimeDatabaseUrl} from "../../../AditionalConstAndFunction/aditionalConstAndFunction";
 
 const ProfileInfo = () => {
     const userInfo = useSelector(state => state.user.userInformation);

@@ -3,14 +3,7 @@ import classes from './AllMessages.module.css';
 import AllMessagesList from "./AllMessagesList/AllMessagesList";
 import {useDispatch, useSelector} from "react-redux";
 import {messageActions} from "../../../../store/messages";
-
-const formatEmail = (email) => {
-    if (email) {
-        email = email.replace(/\./g, '-')
-        email = email.replace('@', '-aron-')
-        return email;
-    }
-}
+import {formatEmail, realtimeDatabaseUrl} from "../../../../AditionalConstAndFunction/aditionalConstAndFunction";
 
 const findCurrentMessages = (obj, email) => {
     let newObj = [];
@@ -40,7 +33,7 @@ const AllMessages = () => {
 
     useEffect(() => {
         if (emailOfContactFormatted) {
-            fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/all-messages.json')
+            fetch(realtimeDatabaseUrl + 'all-messages.json')
                 .then(response => {
                     if (response.ok) {
                         return response.json();

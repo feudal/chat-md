@@ -1,29 +1,11 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-
-const fetchUrl = 'https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app';
-
-const formatEmail = (email) => {
-    if (email) {
-        email = email.replace(/\./g, '-')
-        email = email.replace('@', '-aron-')
-        return email;
-    }
-}
-const findSecondFragment = (data, email) => {
-    let secondFragmentUrl;
-    for (const key in data) for (const key2 in data[key]) {
-        if (key2.includes(formatEmail(email)) && key2.includes(formatEmail(localStorage.email))) {
-            secondFragmentUrl = '/' + key + '/' + key2 + '.json';
-        }
-    }
-    return secondFragmentUrl;
-}
+import {findSecondFragment, realtimeDatabaseUrl} from "../AditionalConstAndFunction/aditionalConstAndFunction";
 
 export const sendMessageAsync = createAsyncThunk(
     'message/sendMessageAsync',
     async function ({username, message, email}, {dispatch, rejectWithValue}) {
         try {
-            fetch(fetchUrl + '/all-messages.json')
+            fetch(realtimeDatabaseUrl + 'all-messages.json')
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -37,7 +19,7 @@ export const sendMessageAsync = createAsyncThunk(
                     console.log(secondFragmentUrl)
 
                     if (secondFragmentUrl) { //if messages exist
-                        return fetch(fetchUrl + '/all-messages/' + secondFragmentUrl, {
+                        return fetch(realtimeDatabaseUrl + 'all-messages/' + secondFragmentUrl, {
                             method: 'POST',
                             body: JSON.stringify({
                                 date: new Date(),

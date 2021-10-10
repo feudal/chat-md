@@ -4,6 +4,7 @@ import ContactSection from "./ContactSection/ContactSection";
 import SearchSection from "./SearchSection/SearchSection";
 import {useDispatch, useSelector} from "react-redux";
 import {userAction} from "../../../store/user";
+import {realtimeDatabaseUrl} from "../../../AditionalConstAndFunction/aditionalConstAndFunction";
 
 const Contacts = () => {
     const [serverError, setServerError] = useState(false);
@@ -15,7 +16,7 @@ const Contacts = () => {
     const blockedContactList = useSelector(state => state.user.userBlockedContactList);
 
     useEffect(() => {
-        fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/users-info.json')
+        fetch(realtimeDatabaseUrl + 'users-info.json')
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -37,7 +38,7 @@ const Contacts = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/contacts-of-the-users/' + localStorage.id + '/contacts.json')
+        fetch(realtimeDatabaseUrl + 'contacts-of-the-users/' + localStorage.id + '/contacts.json')
             .then(response => {
                 if (response.ok) {
                     return response.json();

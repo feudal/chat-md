@@ -3,6 +3,7 @@ import classes from './ProfileImage.module.css';
 import {setImgUrlOnServer, userAction} from "../../../store/user";
 import {useDispatch, useSelector} from "react-redux";
 import firebase from "../../../firebase";
+import {realtimeDatabaseUrl} from "../../../AditionalConstAndFunction/aditionalConstAndFunction";
 
 const ProfileImage = (props) => {
     const dispatch = useDispatch();
@@ -10,7 +11,7 @@ const ProfileImage = (props) => {
     const [image, setImage] = useState(null);
 
     useEffect(() => {
-        fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + 'users-info/' + localStorage.id + '.json')
+        fetch(realtimeDatabaseUrl + 'users-info/' + localStorage.id + '.json')
             .then (response => {
                 if (!response.ok) {
                     throw new Error('Server error');

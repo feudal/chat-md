@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
-// import {useSelector} from "react-redux";
-// import {userAction} from "./user";
+import {realtimeDatabaseUrl} from "../AditionalConstAndFunction/aditionalConstAndFunction";
+
 
 const authState = () => {
     //logout state if the token is expired;
@@ -61,7 +61,7 @@ const authSlice = createSlice({
 
 export const createUserOnServer = (userInformation) => {
     fetch(
-        'https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/users-info.json',
+        realtimeDatabaseUrl + 'users-info.json',
         {
             method: 'POST',
             headers: {

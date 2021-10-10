@@ -1,34 +1,11 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {
+    findKeyWithEmailFromData,
+    findSecondFragment,
+    formatEmail,
+    realtimeDatabaseUrl
+} from "../AditionalConstAndFunction/aditionalConstAndFunction";
 
-const findKeyWithEmailFromData = (data, email) => {
-    for (const key in data) {
-        if (data.hasOwnProperty(key)) {
-            if (data[key].email === email) {
-                return key;
-            }
-        }
-    }
-}
-
-const formatEmail = (email) => {
-    if (email) {
-        email = email.replace(/\./g, '-')
-        email = email.replace('@', '-aron-')
-        return email;
-    }
-}
-
-const findSecondFragment = (data, email) => {
-    let secondFragmentUrl;
-    for (const key in data) for (const key2 in data[key]) {
-        if (key2.includes(formatEmail(email)) && key2.includes(formatEmail(localStorage.email))) {
-            secondFragmentUrl = '/' + key + '/' + key2 + '.json';
-        }
-    }
-    return secondFragmentUrl;
-}
-
-const realtimeDatabaseUrl = 'https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/';
 const fetchUrl = realtimeDatabaseUrl + '/contacts-of-the-users/' + localStorage.id + '/contacts.json'
 
 export const removeFromFavorite = createAsyncThunk(
