@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavLink} from "react-router-dom";
 import classes from './Aside.module.css';
 import Logo from "./Logo";
@@ -10,11 +10,28 @@ import UserIcon from "../User/UserIcon";
 import {useDispatch, useSelector} from "react-redux";
 import {authActions} from "../../store/auth";
 import {useHistory}  from 'react-router-dom';
+import {realtimeDatabaseUrl} from "../../AditionalConstAndFunction/aditionalConstAndFunction";
+import {userAction} from "../../store/user";
 
 const Aside = () => {
+    const dispatch = useDispatch();
+
+    const userImgUrl = useSelector(state => state.user.userInformation.imgUrl);
     const history = useHistory();
     const userIsLoggedIn = useSelector(state => state.auth.isLoggedIn);
-    const dispatch = useDispatch();
+
+    useEffect(() => {
+        fetch(realtimeDatabaseUrl + 'users-info/' + localStorage.id + '.json')
+            .then (response => {
+                if (!response.ok) {
+                    throw new Error('Server error');
+                }
+                return response.json();
+            })
+            .then(data => {
+                dispatch(userAction.setImgUrl(data.imgUrl));
+            });
+    }, [dispatch, userImgUrl]);
 
     const logOutHandler = () => {
         dispatch(authActions.logout());
@@ -56,7 +73,7 @@ const Aside = () => {
                             className={classes['profile-link']}
                             activeClassName={classes.active}
                             to='/profile'>
-                            <UserIcon/>
+                            <UserIcon url={userImgUrl}/>
                         </NavLink>
                         <button
                             onClick={logOutHandler}
