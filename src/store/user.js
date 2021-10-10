@@ -338,6 +338,27 @@ export const updateUserInfoOnServer = createAsyncThunk(
         }
     }
 )
+export const setImgUrlOnServer = createAsyncThunk(
+    'user/setImgUrlOnServer',
+    async function (url, {dispatch, rejectWithValue}) {
+        try {
+            fetch(realtimeDatabaseUrl + 'users-info/' + localStorage.id + '.json', {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    imgUrl: url,
+                })
+            }).then(res => {
+                if (!res.ok) {
+                    throw new Error('Server error');
+                } else {
+                    dispatch(userAction.setImgUrl(url));
+                }
+            })
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+)
 
 const initialState = {
     status: 'null',
@@ -386,6 +407,9 @@ const userSlice = createSlice({
             state.status = 'server error';
         },
         [updateUserInfoOnServer.rejected]: (state) => {
+            state.status = 'server error';
+        },
+        [setImgUrlOnServer.rejected]: (state) => {
             state.status = 'server error';
         }
     },
@@ -440,6 +464,9 @@ const userSlice = createSlice({
             state.userInformation.dob = action.payload.dob;
             state.userInformation.personalInfo = action.payload.personalInfo;
         },
+        setImgUrl(state, action) {
+            state.userInformation.imgUrl = action.payload;
+        }
 
     }
 });

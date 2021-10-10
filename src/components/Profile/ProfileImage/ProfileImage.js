@@ -1,11 +1,27 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import classes from './ProfileImage.module.css';
-import firebase from '../../../firebase/index';
+import {setImgUrlOnServer, userAction} from "../../../store/user";
+import {useDispatch, useSelector} from "react-redux";
+import firebase from "../../../firebase";
 
 const ProfileImage = (props) => {
-    const [url, setUrl] = useState(null);
-    const [progress, setProgress] = useState(0);
+    const dispatch = useDispatch();
+    const imgUrl = useSelector(state => state.user.userInformation.imgUrl);
     const [image, setImage] = useState(null);
+
+    useEffect(() => {
+        fetch('https://chat-6f549-default-rtdb.europe-west1.firebasedatabase.app/' + 'users-info/' + localStorage.id + '.json')
+            .then (response => {
+                if (!response.ok) {
+                    throw new Error('Server error');
+                }
+                return response.json();
+            })
+            .then(data => {
+                dispatch(userAction.setImgUrl(data.imgUrl));
+            });
+    }, [dispatch])
+
     const onChangeHandler = event => {
         if (event.target.files[0]) {
             const img = event.target.files[0];
@@ -21,25 +37,22 @@ const ProfileImage = (props) => {
 
         uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
             (snapshot) => {
-                setProgress(Math.round((snapshot.bytesTransferred / snapshot.totalBytes)) * 100);
+                console.log(Math.round((snapshot.bytesTransferred / snapshot.totalBytes)) * 100);
             }, (error) => {
                 throw error
             }, () => {
-                uploadTask.snapshot.ref.getDownloadURL().then((url) => {
-                    setUrl(url);
-                })
+                firebase.storage().ref('users-images/').child(newFileName).getDownloadURL()
+                    .then((url) => {
+                        dispatch(setImgUrlOnServer(url));
+                    })
             }
         )
     }
 
-    console.log(image);
-    console.log(progress);
-    console.log(url);
-
     return (
         <div className={classes.frame}>
             <div className={classes['img']}>
-                {url && <img src={url} alt="user"/>}
+                {imgUrl && <img src={imgUrl} alt="user"/>}
                 {props.upload && (
                     <input
                         onChange={onChangeHandler}
