@@ -3,7 +3,7 @@ import classes from './YourMessage.module.css';
 import {useSelector} from "react-redux";
 
 const YourMessage = (props) => {
-    const imgUrl = useSelector(state => state.user.currentContact.imgUrl);
+    const imgUrl = useSelector(state => state.contacts.currentContact.imgUrl);
 
     return (
         <li className={classes.message}>

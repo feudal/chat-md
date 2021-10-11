@@ -1,5 +1,9 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {findSecondFragment, realtimeDatabaseUrl} from "../AditionalConstAndFunction/aditionalConstAndFunction";
+import {
+    findSecondFragment,
+    formatEmail,
+    realtimeDatabaseUrl
+} from "../AditionalConstAndFunction/aditionalConstAndFunction";
 
 export const sendMessageAsync = createAsyncThunk(
     'message/sendMessageAsync',
@@ -44,6 +48,44 @@ export const sendMessageAsync = createAsyncThunk(
     }
 )
 
+export const initiateMessaging = createAsyncThunk(
+    'message/initiateMessaging',
+    async function (email, { rejectWithValue}) {
+        try {
+            fetch(realtimeDatabaseUrl + '/all-messages.json')
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Server error');
+                    }
+                })
+                .then(data => {
+                    console.log(data);
+                    const secondFragmentUrl = findSecondFragment(data, email);
+
+                    if (!secondFragmentUrl) {//dont create a new array of message
+                        return fetch(realtimeDatabaseUrl + '/all-messages.json', {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                [formatEmail(email) + '-and-' + formatEmail(localStorage.email)]: {
+                                    '-someKey': {
+                                        date: new Date(),
+                                        message: 'Ati inceput sa comunicati cu un contact nou',
+                                        name: 'System',
+                                    }
+                                }
+                            })
+                        })
+                    }
+                })
+
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+)
+
 const initialState = {
     currentMessages: [],
 }
@@ -68,8 +110,8 @@ const messageSlice = createSlice({
         }
     },
     extraReducers: {
-        [sendMessageAsync.rejected]: (state) => {
-        }
+        [sendMessageAsync.rejected]: () => {},
+        [initiateMessaging.rejected]: () => {},
     }
 })
 

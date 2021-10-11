@@ -3,17 +3,17 @@ import classes from './Contacts.module.css';
 import ContactSection from "./ContactSection/ContactSection";
 import SearchSection from "./SearchSection/SearchSection";
 import {useDispatch, useSelector} from "react-redux";
-import {userAction} from "../../../store/user";
+import {contactsAction} from "../../../store/contacts";
 import {realtimeDatabaseUrl} from "../../../AditionalConstAndFunction/aditionalConstAndFunction";
 
 const Contacts = () => {
     const [serverError, setServerError] = useState(false);
     const dispatch = useDispatch();
 
-    const allContactList = useSelector(state => state.user.allUserContactList);
-    const contactList = useSelector(state => state.user.userContactList);
-    const favoriteContactList = useSelector(state => state.user.userFavoriteContactList);
-    const blockedContactList = useSelector(state => state.user.userBlockedContactList);
+    const allContactList = useSelector(state => state.contacts.allUserContactList);
+    const contactList = useSelector(state => state.contacts.userContactList);
+    const favoriteContactList = useSelector(state => state.contacts.userFavoriteContactList);
+    const blockedContactList = useSelector(state => state.contacts.userBlockedContactList);
 
     useEffect(() => {
         fetch(realtimeDatabaseUrl + 'users-info.json')
@@ -34,7 +34,7 @@ const Contacts = () => {
                         imgUrl: data[key].imgUrl,
                     })
                 }
-                dispatch(userAction.setAllUserContactList(arr));
+                dispatch(contactsAction.setAllUserContactList(arr));
             });
     }, [dispatch]);
 
@@ -71,9 +71,9 @@ const Contacts = () => {
                 favList = favList.map(item => item.email);
                 blockList = blockList.map(item => item.email);
 
-                dispatch(userAction.setUserContactList(contList));
-                dispatch(userAction.setFavoriteContactList(favList));
-                dispatch(userAction.setBlockedContactList(blockList));
+                dispatch(contactsAction.setUserContactList(contList));
+                dispatch(contactsAction.setFavoriteContactList(favList));
+                dispatch(contactsAction.setBlockedContactList(blockList));
             });
     }, [dispatch]);
 

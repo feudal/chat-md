@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {uiActions} from "../../../../store/ui";
 
 const TopBar = () => {
-    const currentUsername = useSelector(state => state.user.currentContact.name)
+    const currentUsername = useSelector(state => state.contacts.currentContact.name)
     const dispatch = useDispatch();
     const openHandler = () => {
         dispatch(uiActions.openContactInfo());

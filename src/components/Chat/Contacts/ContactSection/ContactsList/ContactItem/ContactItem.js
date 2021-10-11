@@ -2,15 +2,15 @@ import React from 'react';
 import {NavLink} from "react-router-dom";
 import classes from './ContactItem.module.css';
 import {useDispatch, useSelector} from "react-redux";
-import {userAction} from "../../../../../../store/user";
+import {contactsAction} from "../../../../../../store/contacts";
 import UserIcon from "../../../../../User/UserIcon";
 
 const ContactItem = (props) => {
     const dispatch = useDispatch();
     let contact = props.contact;
-    const isFavList = useSelector(state => state.user.userFavoriteContactList)
-    const isContactList = useSelector(state => state.user.userContactList)
-    const isBlockedList = useSelector(state => state.user.userBlockedContactList)
+    const isFavList = useSelector(state => state.contacts.userFavoriteContactList)
+    const isContactList = useSelector(state => state.contacts.userContactList)
+    const isBlockedList = useSelector(state => state.contacts.userBlockedContactList)
     let isFavorite = false;
     let isContact = false;
     let isBlocked = false;
@@ -26,7 +26,7 @@ const ContactItem = (props) => {
     }
 
     const setCurrentUserHandler = () => {
-        dispatch(userAction.setCurrentContact(contact));
+        dispatch(contactsAction.setCurrentContact(contact));
     }
     return (
         <li className={classes.item} onClick={setCurrentUserHandler}>

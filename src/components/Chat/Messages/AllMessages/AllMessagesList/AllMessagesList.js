@@ -6,7 +6,7 @@ import classes from './AllMessagesList.module.css';
 
 const AllMessagesList = () => {
     const currentMessages = useSelector(state => state.message.currentMessages);
-    const currentContact = useSelector(state => state.user.currentContact);
+    const currentContact = useSelector(state => state.contacts.currentContact);
 
     const listOfMessage = currentMessages.map((item) => {
         let time = new Date( Date.parse(item.date) );

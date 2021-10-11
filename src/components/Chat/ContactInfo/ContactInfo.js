@@ -4,17 +4,17 @@ import ContactSetting from "./ContactSetting/ContactSetting";
 import Frame from "./ContactSetting/Frame/Frame";
 import CloseBtn from "../../UI/CloseBtn/CloseBtn";
 import {useDispatch, useSelector} from 'react-redux';
-import {uiActions} from "../../../store/ui";
 import classNames from "classnames/bind";
+import {uiActions} from "../../../store/ui";
+import {initiateMessaging} from "../../../store/messages";
 import {
     addToContact,
     addToFavorite,
     blockContact,
-    initiateMessaging,
     removeFromContact,
     removeFromFavorite,
     unblockContact
-} from "../../../store/user";
+} from "../../../store/contacts";
 
 
 const ContactInfo = () => {
@@ -23,7 +23,7 @@ const ContactInfo = () => {
     const closeHandler = () => {
         dispatch(uiActions.closeContactInfo());
     }
-    const currentUser = useSelector(state => state.user.currentContact);
+    const currentUser = useSelector(state => state.contacts.currentContact);
 
     const toggleFavoriteHandler = (email) => {
         if (currentUser.isFavorite) {

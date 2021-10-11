@@ -28,7 +28,7 @@ const findCurrentMessages = (obj, email) => {
 
 const AllMessages = () => {
     const dispatch = useDispatch();
-    const currentUser = useSelector(state => state.user.currentContact);
+    const currentUser = useSelector(state => state.contacts.currentContact);
     const emailOfContactFormatted = formatEmail(currentUser.email);
 
     useEffect(() => {

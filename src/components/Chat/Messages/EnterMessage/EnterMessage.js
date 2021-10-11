@@ -7,7 +7,7 @@ const EnterMessage = () => {
     const dispatch = useDispatch();
     const userInput = useRef();
     const userInfo = useSelector(state => state.user.userInformation);
-    const currentUserEmail = useSelector(state => state.user.currentContact.email);
+    const currentUserEmail = useSelector(state => state.contacts.currentContact.email);
 
     const onSubmitHandler = (event) => {
         event.preventDefault();
