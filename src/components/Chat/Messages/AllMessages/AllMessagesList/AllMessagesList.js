@@ -10,16 +10,18 @@ const AllMessagesList = () => {
 
     const listOfMessage = currentMessages.map((item) => {
         let time = new Date( Date.parse(item.date) );
-        const hour = time.getHours();
-        const min = time.getMinutes();
-        console.log('item', item)
+        let hour = time.getHours().toString();
+        let min = time.getMinutes().toString();
+
+        //transform  2:3 to 02:03
+        hour = (hour.length === 1) ? ('0' + hour) : hour;
+        min = (min.length === 1) ? ('0' + min) : min;
 
         if(item.name === localStorage.email){
             return (
                 <MyMessage
                     key={item.date}
                     name={item.name}
-                    // url={item.}
                     text={item.message}
                     hour={hour}
                     min={min}

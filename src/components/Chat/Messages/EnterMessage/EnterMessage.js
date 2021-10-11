@@ -7,15 +7,20 @@ const EnterMessage = () => {
     const dispatch = useDispatch();
     const userInput = useRef();
     const userInfo = useSelector(state => state.user.userInformation);
-    const currentUserEmail = useSelector(state => state.contacts.currentContact.email);
+    const currentUser = useSelector(state => state.contacts.currentContact);
 
     const onSubmitHandler = (event) => {
         event.preventDefault();
-        if(userInput.current.value) {
+        //can send message if user is not in contact and is not favorite
+        if (!currentUser.isContact && !currentUser.isFavorite) {
+            userInput.current.value = '';
+        }
+
+        if (userInput.current.value) {
             dispatch(sendMessageAsync({
                 username: userInfo.name,
                 message: userInput.current.value,
-                email: currentUserEmail,
+                email: currentUser.email,
             }));
         }
         userInput.current.value = '';
