@@ -7,7 +7,7 @@ import {
 
 export const sendMessageAsync = createAsyncThunk(
     'message/sendMessageAsync',
-    async function ({username, message, email}, {dispatch, rejectWithValue}) {
+    async function ({message, email}, {dispatch, rejectWithValue}) {
         try {
             fetch(realtimeDatabaseUrl + 'all-messages.json')
                 .then(response => {
@@ -25,7 +25,7 @@ export const sendMessageAsync = createAsyncThunk(
                             method: 'POST',
                             body: JSON.stringify({
                                 date: new Date(),
-                                name: username,
+                                name: localStorage.id,
                                 message,
                             })
                         })
@@ -37,7 +37,7 @@ export const sendMessageAsync = createAsyncThunk(
                     } else {
                         dispatch(messageActions.sendMessage({
                             date: new Date(),
-                            name: username,
+                            name: localStorage.id,
                             message,
                         }))
                     }

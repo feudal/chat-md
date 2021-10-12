@@ -6,7 +6,6 @@ import {sendMessageAsync} from "../../../../store/messages";
 const EnterMessage = () => {
     const dispatch = useDispatch();
     const userInput = useRef();
-    const userInfo = useSelector(state => state.user.userInformation);
     const currentUser = useSelector(state => state.contacts.currentContact);
 
     const onSubmitHandler = (event) => {
@@ -18,7 +17,6 @@ const EnterMessage = () => {
 
         if (userInput.current.value) {
             dispatch(sendMessageAsync({
-                username: userInfo.name,
                 message: userInput.current.value,
                 email: currentUser.email,
             }));

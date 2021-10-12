@@ -1,8 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {
     findKeyWithEmailFromData,
-    findSecondFragment,
-    formatEmail,
     realtimeDatabaseUrl
 } from "../AditionalConstAndFunction/aditionalConstAndFunction";
 

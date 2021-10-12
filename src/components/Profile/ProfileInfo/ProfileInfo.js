@@ -2,26 +2,15 @@ import React, {useEffect} from 'react';
 import classes from './ProfileInfo.module.css';
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {userAction} from "../../../store/user";
-import {realtimeDatabaseUrl} from "../../../AditionalConstAndFunction/aditionalConstAndFunction";
+import {refreshUserInfoFromServer} from "../../../store/user";
 
 const ProfileInfo = () => {
     const userInfo = useSelector(state => state.user.userInformation);
     const dispatch = useDispatch();
-    
+
     useEffect(()=> {
-        fetch(realtimeDatabaseUrl + 'users-info/' + localStorage.id + '.json')
-            .then(res => {
-                if (!res.ok){
-                    throw new Error('Server error');
-                } else {
-                    return res.json();
-                }
-            })
-            .then(data => {
-                dispatch(userAction.updateUserInfo(data));
-            })
-    },[dispatch])
+        dispatch(refreshUserInfoFromServer());
+    },[dispatch]);
 
     return (
         <div className={classes.container}>

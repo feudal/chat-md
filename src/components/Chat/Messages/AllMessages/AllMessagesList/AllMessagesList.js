@@ -1,14 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import MyMessage from "./MyMessage/MyMessage";
 import YourMessage from "./YourMessage/YourMessage";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import classes from './AllMessagesList.module.css';
+import {refreshUserInfoFromServer} from "../../../../../store/user";
 
 const AllMessagesList = () => {
     const currentMessages = useSelector(state => state.message.currentMessages);
     const currentContact = useSelector(state => state.contacts.currentContact);
+    const activeUser = useSelector(state => state.user.userInformation);
+    const dispatch = useDispatch();
 
-    const listOfMessage = currentMessages.map((item) => {
+    useEffect(()=> {
+        dispatch(refreshUserInfoFromServer());
+    },[dispatch]);
+
+    let listOfMessage = currentMessages.map((item) => {
         let time = new Date( Date.parse(item.date) );
         let hour = time.getHours().toString();
         let min = time.getMinutes().toString();
@@ -16,27 +23,30 @@ const AllMessagesList = () => {
         //transform  2:3 to 02:03
         hour = (hour.length === 1) ? ('0' + hour) : hour;
         min = (min.length === 1) ? ('0' + min) : min;
+        console.log('item',item)
 
-        if(item.name === localStorage.email){
+        if (item.name === localStorage.id) {
             return (
                 <MyMessage
                     key={item.date}
-                    name={item.name}
+                    name={activeUser.name}
+                    text={item.message}
+                    hour={hour}
+                    min={min}
+                />
+            )
+        } else if (item.name === currentContact.id) {
+            return (
+                <YourMessage
+                    key={item.date}
+                    name={currentContact.name}
                     text={item.message}
                     hour={hour}
                     min={min}
                 />
             )
         } else {
-            return (
-                <YourMessage
-                    key={item.date}
-                    name={item.name}
-                    text={item.message}
-                    hour={hour}
-                    min={min}
-                />
-            )
+            return null;
         }
     });
     return (

@@ -32,6 +32,27 @@ export const updateUserInfoOnServer = createAsyncThunk(
     }
 )
 
+export const refreshUserInfoFromServer = createAsyncThunk(
+    'user/refreshUserInfoFromServer',
+    async function (_,{dispatch, rejectWithValue}) {
+        try {
+            fetch(realtimeDatabaseUrl + 'users-info/' + localStorage.id + '.json')
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Server error');
+                    } else {
+                        return res.json();
+                    }
+                })
+                .then(data => {
+                    dispatch(userAction.updateUserInfo(data));
+                })
+        } catch (error) {
+            return rejectWithValue;
+        }
+    }
+)
+
 export const setImgUrlOnServer = createAsyncThunk(
     'userInfo/setImgUrlOnServer',
     async function (url, {dispatch, rejectWithValue}) {
@@ -73,6 +94,9 @@ const userSlice = createSlice({
             state.status = 'server error';
         },
         [setImgUrlOnServer.rejected]: (state) => {
+            state.status = 'server error';
+        },
+        [refreshUserInfoFromServer.rejected]: (state) => {
             state.status = 'server error';
         }
     },

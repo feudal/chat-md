@@ -27,3 +27,4 @@ export const findSecondFragment = (data, email) => {
     }
     return secondFragmentUrl;
 }
+
