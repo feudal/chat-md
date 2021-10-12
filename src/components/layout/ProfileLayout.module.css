@@ -5,3 +5,14 @@
     grid-gap: 20px;
     padding: 20px;
 }
+
+@media only screen and (max-width: 640px) {
+    .layout {
+        display: block;
+    }
+}
+@media only screen and (max-width: 380px) {
+    .layout {
+        padding: 10px;
+    }
+}

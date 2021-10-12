@@ -60,3 +60,9 @@ p {
 .edit-btn:hover {
     background: url('../../../assets/icons/editBtnHover.svg') no-repeat center center;
 }
+
+@media only screen and (max-width: 480px) {
+    .group {
+        padding: 5px 0;
+    }
+}

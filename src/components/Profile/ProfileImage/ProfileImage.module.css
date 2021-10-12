@@ -65,3 +65,10 @@
 .button:hover {
     background: #252893;
 }
+
+@media only screen and (max-width: 480px) {
+    .img {
+        height: 50vh;
+        border-radius: 10px;
+    }
+}
