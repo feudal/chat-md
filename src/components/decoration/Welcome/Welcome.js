@@ -1,10 +1,17 @@
 import React from 'react';
 import classes from './Welcome.module.css';
+import {useSelector} from "react-redux";
 
-const Welcome = (props) => {
+const Welcome = () => {
+    const name = useSelector(state => state.user.userInformation.name);
+    console.log('name', name)
     return (
         <div className={classes.wellcome}>
-            Bun venit {props.name}!
+            <div>
+                <span>Bun venit </span>
+                {name && <span>{'\n' + name}!</span>}
+                {!name && <span>!</span>}
+            </div>
         </div>
     );
 };
