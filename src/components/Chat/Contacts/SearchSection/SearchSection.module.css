@@ -51,3 +51,22 @@
 .input:focus {
     border: 1px solid #ffffff50;
 }
+
+@media only screen and (max-width: 640px) {
+    .form {
+        margin-top: 10px;
+    }
+    .group {
+        margin: 10px 20px;
+    }
+}
+
+@media only screen and (max-width: 380px) {
+    .title {
+        margin-left: 10px;
+    }
+    .group {
+        width: calc(100% - 20px);
+        margin: 10px;
+    }
+}
