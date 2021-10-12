@@ -49,3 +49,11 @@
     display: inline-block;
     color: #fff;
 }
+
+@media only screen and (max-width: 380px) {
+    .notification {
+        height: 45px;
+        padding: 10px 40px 10px 10px;
+    }
+}
+@media only screen and (max-width: 320px) {}

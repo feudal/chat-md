@@ -8,3 +8,9 @@
     top: 20px;
     right: 20px;
 }
+@media only screen and (max-width: 380px) {
+    .close-btn {
+        top: 10px;
+        right: 10px;
+    }
+}
