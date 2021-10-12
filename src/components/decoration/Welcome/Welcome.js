@@ -1,12 +1,19 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import classes from './Welcome.module.css';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {refreshUserInfoFromServer} from "../../../store/user";
 
 const Welcome = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(refreshUserInfoFromServer());
+    }, [dispatch]);
+
     const name = useSelector(state => state.user.userInformation.name);
-    console.log('name', name)
+
     return (
-        <div className={classes.wellcome}>
+        <div className={classes.welcome}>
             <div>
                 <span>Bun venit </span>
                 {name && <span>{'\n' + name}!</span>}
