@@ -124,3 +124,52 @@ input:-webkit-autofill:active {
     margin-bottom: 10px;
 }
 
+
+@media only screen and (max-width: 750px) {
+    .form {
+        width: 75vw;
+        padding: 30px 20px;
+    }
+}
+
+@media only screen and (max-width: 420px) {
+    .form {
+        border-radius: 10px;
+    }
+    .title {
+        font-size: 24px;
+        line-height: 28px;
+    }
+
+    .label {
+        font-size: 16px;
+        line-height: 18px;
+    }
+
+    .error {
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    .form-group .span {
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    .form-group .link {
+        font-size: 14px;
+        line-height: 18px;
+    }
+}
+
+@media only screen and (max-width: 380px) {
+    .form {
+        width: 80vw;
+        padding: 15px 10px;
+    }
+    .title {
+        text-align: left;
+        margin-bottom: 10px;
+    }
+}
+
