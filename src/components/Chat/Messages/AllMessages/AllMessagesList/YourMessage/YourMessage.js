@@ -14,8 +14,13 @@ const YourMessage = (props) => {
                         <img src={imgUrl} alt="user"/>
                     </div>)
                 }
-                <span className={classes.name}>{props.name}</span>
-                <span className={classes.date}>{props.hour}:{props.min}</span>
+                {/*if props.name is null, don't show it*/}
+                {props.name && (
+                    <>
+                        <span className={classes.name}>{props.name}</span>
+                        <span className={classes.date}>{props.hour}:{props.min}</span>
+                    </>
+                )}
             </div>
         </li>
     );
