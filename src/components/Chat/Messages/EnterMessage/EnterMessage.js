@@ -1,5 +1,6 @@
 import React, {useRef} from 'react';
 import classes from './EnterMessage.module.css';
+import classesFromAllMessage from '../AllMessages/AllMessages.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {sendMessageAsync} from "../../../../store/messages";
 
@@ -20,7 +21,19 @@ const EnterMessage = () => {
                 message: userInput.current.value,
                 email: currentUser.email,
             }));
+            //scroll down when the message is sending
+            const element = document.querySelector('.' + classesFromAllMessage.block);
+            const scroll = () => {
+                setTimeout(()=> {
+                    element.scrollTop = element.scrollHeight;
+                }, 500);
+            }
+            scroll();
         }
+
+
+
+
         userInput.current.value = '';
     }
 
