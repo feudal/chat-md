@@ -47,3 +47,21 @@
 .button:hover {
     background: #252893;
 }
+
+@media only screen and (max-width: 786px) {
+    .button {
+        font-size: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .button:after {
+        margin-left: 2px;
+    }
+}
+@media only screen and (max-width: 480px) {
+    .form {
+        padding: 10px;
+    }
+}

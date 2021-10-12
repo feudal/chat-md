@@ -1,8 +1,15 @@
 .messages {
     width: 100%;
 }
+
 .wrapper {
     display: flex;
     flex-direction: column;
     height: calc(100vh - 70px);
+}
+
+@media only screen and (max-width: 380px) {
+    .wrapper {
+        height: calc(100vh - 50px);
+    }
 }

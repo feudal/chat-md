@@ -19,7 +19,9 @@
 
 .group {
     text-align: right;
+    margin-bottom: 5px;
 }
+
 .group span {
     font-family: Sahitya, serif;
     font-style: normal;
@@ -35,4 +37,20 @@
 
 .name {
     color: #fff;
+}
+
+@media only screen and (max-width: 480px) {
+    .text {
+        padding: 10px;
+        margin-bottom: 5px;
+    }
+}
+
+@media only screen and (max-width: 380px) {
+    .message {
+        max-width: 75%;
+    }
+    .text {
+        padding: 8px;
+    }
 }

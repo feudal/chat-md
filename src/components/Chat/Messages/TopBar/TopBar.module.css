@@ -16,5 +16,11 @@
     font-style: normal;
     font-weight: 700;
     text-align: left;
+}
 
+@media only screen and (max-width: 380px) {
+    .topbar {
+        padding: 10px;
+        height: 50px;
+    }
 }
