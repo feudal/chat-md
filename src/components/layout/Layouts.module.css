@@ -7,3 +7,9 @@
     min-height: 100vh;
     overflow: hidden;
 }
+
+@media only screen and (max-width: 380px) {
+    .main {
+        margin-left: 60px;
+    }
+}
