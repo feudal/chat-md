@@ -1,5 +1,9 @@
 .section {
-    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+
+    height: calc(100vh - 70px);
+    overflow-y: scroll;
 }
 
 .title {
@@ -15,7 +19,7 @@
     margin: 10px 20px;
 }
 .empty {
-    margin: 10px 20px;
+    margin: 0 20px;
     font-family: Sahitya, serif;
     font-size: 18px;
     line-height: 22px;
@@ -29,5 +33,8 @@
     }
     .empty {
         margin: 5px 10px;
+    }
+    .section {
+        height: calc(100vh - 50px);
     }
 }

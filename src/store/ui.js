@@ -2,6 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
     showContactInfo: true,
+    contactSectionIsClosed: false,
     messageNotification: {
         show: false,
         type: null,
@@ -33,7 +34,10 @@ const uiSlice = createSlice({
         },
         setSearchByInput(state,action) {
             state.searchByInput = action.payload.toLowerCase().trim();
-        }
+        },
+        toggleContactSection(state) {
+            state.contactSectionIsClosed = !state.contactSectionIsClosed;
+        },
     }
 });
 

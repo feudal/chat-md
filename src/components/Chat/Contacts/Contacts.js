@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import classes from './Contacts.module.css';
 import ContactSection from "./ContactSection/ContactSection";
-import SearchSection from "./SearchSection/SearchSection";
 import {useDispatch, useSelector} from "react-redux";
 import {contactsAction} from "../../../store/contacts";
 import {realtimeDatabaseUrl} from "../../../AditionalConstAndFunction/aditionalConstAndFunction";
+import CloseBtn from "../../UI/CloseBtn/CloseBtn";
+import {uiActions} from "../../../store/ui";
 
 const Contacts = () => {
     const [serverError, setServerError] = useState(false);
@@ -77,10 +78,18 @@ const Contacts = () => {
             });
     }, [dispatch]);
 
+    const closeContactSectionHandler = () => {
+        dispatch(uiActions.toggleContactSection());
+    }
+    const contactSectionClosed = useSelector(state => state.ui.contactSectionIsClosed);
+    const classForContact = `${classes.contacts } + ${contactSectionClosed ? classes['contacts--closed'] : ''}`;
+
     return (
-        <div className={classes.contacts}>
-            <h2 className={classes.title}>Chat Room</h2>
-            <SearchSection/>
+        <div className={classForContact}>
+            <div className={classes.title}>
+                <h2>Chat Room</h2>
+                <CloseBtn close={closeContactSectionHandler}/>
+            </div>
             {serverError && <p className={classes['server-error']}>Server error...</p>}
             {!serverError && (
                 <ContactSection

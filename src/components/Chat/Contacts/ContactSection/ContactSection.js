@@ -2,6 +2,7 @@ import React from 'react';
 import ContactsList from "./ContactsList/ContactsList";
 import classes from './ContactSection.module.css';
 import {useSelector} from "react-redux";
+import SearchSection from "../SearchSection/SearchSection";
 
 const elementIsInArray = (el, arr) => {
     for (let i = 0; i < arr.length; i++) {
@@ -25,7 +26,7 @@ const ContactSection = (props) => {
 
     return (
         <section className={classes.section}>
-
+            <SearchSection/>
             <h2 className={classes.title}>Favorite</h2>
             {favoriteList.length > 0 && (<ContactsList list={favoriteList} isFavorite={true}/>)}
             {favoriteList.length === 0 && (<p className={classes.empty}>Nimeni</p>)}

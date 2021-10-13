@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {NavLink, useHistory} from "react-router-dom";
+import {NavLink, useHistory, useLocation} from "react-router-dom";
 import classes from './Aside.module.css';
 import Logo from "./Logo";
 import ChatIcon from "../Icons/ChatIcon";
@@ -10,6 +10,7 @@ import UserIcon from "../User/UserIcon";
 import {useDispatch, useSelector} from "react-redux";
 import {authActions} from "../../store/auth";
 import {refreshUserInfoFromServer} from "../../store/user";
+import {uiActions} from "../../store/ui";
 
 const Aside = () => {
     const dispatch = useDispatch();
@@ -26,14 +27,24 @@ const Aside = () => {
         dispatch(authActions.logout());
         history.push('/');
     }
+
+    const toggleContactSectionHandler = () => {
+        dispatch(uiActions.toggleContactSection());
+    }
+    const contactSectionIsClosed = useSelector(state => state.ui.contactSectionIsClosed);
+    const location = useLocation();
+    const isChatPage = location.pathname === '/chat';
+    const classForNavLinkContacts = `${classes.link} ${contactSectionIsClosed && isChatPage ? classes['link--contacts-closed'] : ''}`
+
     return (
         <aside className={classes.aside}>
             <Logo/>
             <nav className={classes.nav}>
                 {userIsLoggedIn && (
                     <NavLink
+                        onClick={toggleContactSectionHandler}
                         title="Chat"
-                        className={classes.link}
+                        className={classForNavLinkContacts}
                         activeClassName={classes.active}
                         to='/chat'>
                         <ChatIcon/>

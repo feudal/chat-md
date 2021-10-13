@@ -56,12 +56,27 @@
         align-items: center;
         justify-content: center;
     }
+
     .button:after {
         margin-left: 2px;
     }
 }
+
 @media only screen and (max-width: 480px) {
     .form {
         padding: 10px;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    .form {
+        padding: 5px;
+    }
+    .input {
+        border-radius: 2px;
+        margin-right: 5px;
+    }
+    .button {
+        border-radius: 2px;
     }
 }

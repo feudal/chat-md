@@ -1,28 +1,28 @@
 .contacts {
     border-right: 1px solid #2D2E38;
-    padding: 20px 0;
+    padding-top: 1px;
     width: 500px;
     height: 100vh;
-    overflow-y: scroll;
+    position: relative;
 }
 
-.contacts {
-    scrollbar-width: thin;
-}
-
-::-webkit-scrollbar {
-    width: 6px;
-}
-::-webkit-scrollbar-thumb {
-    /*background-color: #ffffff20;*/
-    border-radius: 3px;
-    border: 1px solid #ffffff50;
-}
-::-webkit-scrollbar-track {
-    background-color: transparent;
-
-}
 .title {
+    background: #191a21;
+    padding: 20px;
+    border-bottom: 1px solid #2D2E38;
+    height: 70px;
+    width: 100%;
+    position: sticky;
+    z-index: 10;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title h2 {
     font-family: Sahitya, serif;
     font-size: 24px;
     line-height: 28px;
@@ -36,8 +36,32 @@
     padding: 20px;
 }
 
+@media only screen and (max-width: 786px) {
+    .contacts {
+        position: absolute;
+        z-index: 10;
+        width: 300px;
+        background: #191a21;
+        transition: all .5s;
+        transform: translateX(0);
+    }
+
+    .contacts--closed {
+        transform: translateX(-100%);
+    }
+}
+
 @media only screen and (max-width: 480px) {
     .form {
         width: 100%;
+    }
+}
+
+@media only screen and (max-width: 380px) {
+    .contacts {
+        width: calc(100vw - 60px);
+    }
+    .title {
+        height: 50px;
     }
 }
