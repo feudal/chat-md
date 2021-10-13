@@ -106,6 +106,7 @@ const userSlice = createSlice({
             state.userInformation.phone = action.payload.phone;
             state.userInformation.dob = action.payload.dob;
             state.userInformation.personalInfo = action.payload.personalInfo;
+            state.userInformation.imgUrl = action.payload.imgUrl;
         },
         setImgUrl(state, action) {
             state.userInformation.imgUrl = action.payload;

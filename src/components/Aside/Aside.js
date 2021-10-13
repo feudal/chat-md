@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {NavLink} from "react-router-dom";
+import {NavLink, useHistory} from "react-router-dom";
 import classes from './Aside.module.css';
 import Logo from "./Logo";
 import ChatIcon from "../Icons/ChatIcon";
@@ -9,9 +9,7 @@ import LogoutIcon from "../Icons/LogoutIcon";
 import UserIcon from "../User/UserIcon";
 import {useDispatch, useSelector} from "react-redux";
 import {authActions} from "../../store/auth";
-import {useHistory}  from 'react-router-dom';
-import {realtimeDatabaseUrl} from "../../AditionalConstAndFunction/aditionalConstAndFunction";
-import {userAction} from "../../store/user";
+import {refreshUserInfoFromServer} from "../../store/user";
 
 const Aside = () => {
     const dispatch = useDispatch();
@@ -21,19 +19,8 @@ const Aside = () => {
     const userIsLoggedIn = useSelector(state => state.auth.isLoggedIn);
 
     useEffect(() => {
-        fetch(realtimeDatabaseUrl + 'users-info/' + localStorage.id + '.json')
-            .then (response => {
-                if (!response.ok) {
-                    throw new Error('Server error');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if(data){
-                    dispatch(userAction.setImgUrl(data.imgUrl));
-                }
-            });
-    }, [dispatch, userImgUrl]);
+        dispatch(refreshUserInfoFromServer());
+    }, [dispatch]);
 
     const logOutHandler = () => {
         dispatch(authActions.logout());
